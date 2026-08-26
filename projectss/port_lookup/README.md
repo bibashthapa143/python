@@ -11,8 +11,8 @@ python main3.py
 
 **Output:** only ports with a known service
 
-Port 21 -> FTP
-Port 22 -> SSH
+Port 21 -> FTP <br>
+Port 22 -> SSH <br>
 Port 80 -> HTTP
 
 ## Concepts used
