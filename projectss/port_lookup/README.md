@@ -8,6 +8,7 @@ static dictionary — not a live scan.
 python main3.py
 
 **Input:** start port, end port
+
 **Output:** only ports with a known service
 
 Port 21 -> FTP
