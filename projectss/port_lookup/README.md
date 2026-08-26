@@ -10,18 +10,19 @@ Looks up the common service for a single port, or a whole range of ports, using 
 
 ## 🚀 Run It
 
-\`\`\`bash
+```bash 
 python main3.py
-\`\`\`
+``` 
 
-**Input:** start port, end port
+**Input:** start port, end port <br>
 **Output:** only the ports that match a known service
 
-\`\`\`
+```
 Port 21 -> FTP
 Port 22 -> SSH
 Port 80 -> HTTP
-\`\`\`
+```
+
 
 ---
 
