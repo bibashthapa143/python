@@ -21,15 +21,27 @@ def scan_port(target, port):
 
     if result == 0:
         print(f"Port {port} ({service}): OPEN")                 # connection succeeded
-    else:
-        print(f"Port {port} ({service}): CLOSED")                # connection failed
+        return "open"                                            # signal: this port was open
 
-    return "ok"                                                  # signal: normal result, keep scanning
+    return "closed"                                              # signal: normal result, keep scanning
+
 
 target = input("Enter target IP to scan: ")                     # ask user which address to scan
 
-for port in port_services:                                       # check every port in the dictionary
+port_range = input("Enter port range (e.g. 1-100): ")           # ask user for the range to scan
+start, end = port_range.split("-")
+
+found_open = False                                               # track whether any open port was found
+
+for port in range(int(start), int(end) + 1):                    # check every port in the given range
     status = scan_port(target, port)
+
     if status == "invalid_address":
         print("Invalid or unreachable address — stopping scan.")
         break                                                     # exit the loop early, don't check remaining ports
+
+    if status == "open":
+        found_open = True                                        # remember that we found at least one
+
+if not found_open:
+    print("No open ports found in that range.")                 # friendly message if nothing was open
