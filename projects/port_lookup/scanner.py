@@ -56,5 +56,5 @@ for port in range((start), (end) + 1):                    # check every port in 
     if status == "open":
         found_open = True                                        # remember that we found at least one
 
-if not found_open:
-        print("No open ports found in that range.")                 # friendly message if nothing was open
+if not found_open and status != "invalid_address":
+    print("No open ports found in that range.")
