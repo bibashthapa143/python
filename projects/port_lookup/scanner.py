@@ -28,12 +28,25 @@ def scan_port(target, port):
 
 target = input("Enter target IP to scan: ")                     # ask user which address to scan
 
-port_range = input("Enter port range (e.g. 1-100): ")           # ask user for the range to scan
-start, end = port_range.split("-")
+while True:
+    try:
+        port_range = input("Enter port range (e.g. 1-100): ")           # ask user for the range to scan
+        start, end = port_range.split("-")
+        start=int(start)
+        end =int(end)
+
+        if start > end:
+            start, end = end, start     #swap them automatically
+
+        print(f"scanning from {start} to {end}")
+        break   #valid input received, exit the loop
+
+    except ValueError:
+        print("Invalid range format. Please use format like 1-100")
 
 found_open = False                                               # track whether any open port was found
 
-for port in range(int(start), int(end) + 1):                    # check every port in the given range
+for port in range((start), (end) + 1):                    # check every port in the given range
     status = scan_port(target, port)
 
     if status == "invalid_address":
@@ -44,4 +57,4 @@ for port in range(int(start), int(end) + 1):                    # check every po
         found_open = True                                        # remember that we found at least one
 
 if not found_open:
-    print("No open ports found in that range.")                 # friendly message if nothing was open
+        print("No open ports found in that range.")                 # friendly message if nothing was open
