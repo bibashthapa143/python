@@ -15,6 +15,7 @@
 | [`error_handling/`](./error_handling) | ⚠️ Error Handling in Python | Notes and examples covering how Python handles errors gracefully instead of crashing — from basics to advanced patterns. |
 | [`file-io/`](./file-io) | 📁 File Handling in Python | Notes and examples covering how to read, write, and manage files in Python — from basics to advanced patterns. |
 | [`functions/`](./functions) | 🧩 Functions in Python | Notes and examples covering Python functions — from basics to default parameters, `*args`, `**kwargs`, and advanced patterns. |
+| [`loops-list/`](./loops-list) | 🔁 Loops & Lists in Python | Notes and examples covering loops (`for`, `while`) and lists — from basics to advanced patterns like comprehensions and slicing. |
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 *(This table updates itself automatically — see [`.github/workflows/update-concepts-readme.yml`](../../../.github/workflows/update-concepts-readme.yml))*
