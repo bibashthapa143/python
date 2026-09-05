@@ -18,7 +18,7 @@ import re
 from pathlib import Path
 
 # Path from repo root to the concepts folder
-CONCEPTS_DIR = Path("python/basic/concepts")
+CONCEPTS_DIR = Path("basic/concepts")
 README_PATH = CONCEPTS_DIR / "README.md"
 
 START_MARKER = "<!-- AUTO-GENERATED-CONTENT:START -->"

@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "python/basic/concepts/**"
+      - "basic/concepts/**"
 
 jobs:
   update-readme:
@@ -27,6 +27,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add python/basic/concepts/README.md
+          git add basic/concepts/README.md
           git diff --cached --quiet || git commit -m "docs: auto-update concepts README"
           git push
