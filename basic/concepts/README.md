@@ -12,6 +12,7 @@
 <!-- AUTO-GENERATED-CONTENT:START -->
 | Folder | Topic | Covers |
 |---|---|---|
+
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 *(This table updates itself automatically — see [`.github/workflows/update-concepts-readme.yml`](../../../.github/workflows/update-concepts-readme.yml))*
