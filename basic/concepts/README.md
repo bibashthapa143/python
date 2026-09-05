@@ -16,6 +16,7 @@
 | [`file-io/`](./file-io) | 📁 File Handling in Python | Notes and examples covering how to read, write, and manage files in Python — from basics to advanced patterns. |
 | [`functions/`](./functions) | 🧩 Functions in Python | Notes and examples covering Python functions — from basics to default parameters, `*args`, `**kwargs`, and advanced patterns. |
 | [`loops-list/`](./loops-list) | 🔁 Loops & Lists in Python | Notes and examples covering loops (`for`, `while`) and lists — from basics to advanced patterns like comprehensions and slicing. |
+| [`modules/`](./modules) | 📦 Modules in Python | Notes and examples covering Python modules — built-in, third-party, and your own — from basics to packaging. |
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 *(This table updates itself automatically — see [`.github/workflows/update-concepts-readme.yml`](../../../.github/workflows/update-concepts-readme.yml))*
