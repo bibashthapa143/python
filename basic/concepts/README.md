@@ -12,7 +12,7 @@
 <!-- AUTO-GENERATED-CONTENT:START -->
 | Folder | Topic | Covers |
 |---|---|---|
-
+| [`error_handling/`](./error_handling) | ⚠️ Error Handling in Python | Notes and examples covering how Python handles errors gracefully instead of crashing — from basics to advanced patterns. |
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 *(This table updates itself automatically — see [`.github/workflows/update-concepts-readme.yml`](../../../.github/workflows/update-concepts-readme.yml))*
