@@ -1,0 +1,32 @@
+name: Update Concepts README
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "python/basic/concepts/**"
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Generate README
+        run: python .github/scripts/generate_readme.py
+
+      - name: Commit changes if README updated
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add python/basic/concepts/README.md
+          git diff --cached --quiet || git commit -m "docs: auto-update concepts README"
+          git push
