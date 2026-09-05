@@ -2,7 +2,7 @@ name: Update Concepts README
 
 on:
   push:
-    branches: [main]
+    branches: [python]
     paths:
       - "python/basic/concepts/**"
 
