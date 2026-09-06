@@ -22,14 +22,16 @@ This repo tracks my journey learning Python — from core syntax to real, workin
 
 ```
 basic/
-└── concepts/     # syntax drills & concept notes (error handling, functions, files, etc.)
+├── concepts/       # syntax drills & concept notes (error handling, functions, files, etc.)
+└── theory_Notes/   # written theory notes on Python fundamentals
 
-projects/         # real mini-projects, one folder each
+projects/           # real mini-projects, one folder each
 ```
 
 | Folder | What's Inside |
 |---|---|
 | [`basic/concepts/`](basic/concepts) | 📚 In-depth notes + code examples for each Python concept learned |
+| [`basic/theory_Notes/`](basic/theory_Notes) | 📝 Written theory notes on Python fundamentals |
 | [`projects/`](projects) | 🛠️ Standalone tools, each with its own README |
 
 ---
