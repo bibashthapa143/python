@@ -22,7 +22,6 @@ For the auto-generator to pick up a project correctly, its `README.md` should st
 
 > One-line description of what this project does.
 
-Status: ✅ Done
+Status: 🚧 In Progress
 ```
 
-Status examples: `✅ Done`, `🚧 In Progress`, `🧪 Testing`, `⏸️ Paused`
