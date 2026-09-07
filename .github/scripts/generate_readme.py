@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Auto-generates the folder table inside python/basic/concepts/README.md.
+Auto-generates the folder table inside python/learning/concepts/README.md.
 
 For every subfolder inside CONCEPTS_DIR that contains a README.md,
 this pulls:
@@ -18,7 +18,7 @@ import re
 from pathlib import Path
 
 # Path from repo root to the concepts folder
-CONCEPTS_DIR = Path("basic/concepts")
+CONCEPTS_DIR = Path("learning/concepts")
 README_PATH = CONCEPTS_DIR / "README.md"
 
 START_MARKER = "<!-- AUTO-GENERATED-CONTENT:START -->"
