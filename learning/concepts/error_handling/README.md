@@ -9,6 +9,7 @@
 ---
 
 ## 📑 Table of Contents
+
 - [What is Error Handling?](#-what-is-error-handling)
 - [1. Basic try/except](#1-basic-tryexcept)
 - [2. Catching Specific Errors](#2-catching-specific-errors)
@@ -179,15 +180,15 @@ else:
 
 ## 📋 Common Built-in Exceptions
 
-| Exception | When It Happens |
-|---|---|
-| `ValueError` | Right type, wrong value (e.g. `int("abc")`) |
-| `TypeError` | Wrong type used in an operation |
-| `ZeroDivisionError` | Dividing by zero |
-| `FileNotFoundError` | File doesn't exist |
-| `KeyError` | Missing dictionary key |
-| `IndexError` | List index out of range |
+| Exception           | When It Happens                             |
+| ------------------- | ------------------------------------------- |
+| `ValueError`        | Right type, wrong value (e.g. `int("abc")`) |
+| `TypeError`         | Wrong type used in an operation             |
+| `ZeroDivisionError` | Dividing by zero                            |
+| `FileNotFoundError` | File doesn't exist                          |
+| `KeyError`          | Missing dictionary key                      |
+| `IndexError`        | List index out of range                     |
 
 ---
 
-<p align="center">📁 Part of <b>python/basic/concepts</b></p>
+<p align="center">📁 Part of <b>python/learning/concepts</b></p>
