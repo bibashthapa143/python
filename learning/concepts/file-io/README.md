@@ -9,6 +9,7 @@
 ---
 
 ## 📑 Table of Contents
+
 - [What is File Handling?](#-what-is-file-handling)
 - [1. Opening a File](#1-opening-a-file)
 - [2. The Better Way — with](#2-the-better-way--with)
@@ -59,14 +60,14 @@ with open("notes.txt", "r") as file:
 
 ## 3. File Modes
 
-| Mode | Meaning | Erases Existing Content? | Creates File if Missing? |
-|---|---|---|---|
-| `"r"` | Read (file must exist) | No | ❌ No — raises `FileNotFoundError` |
-| `"w"` | Write | ✅ Yes | ✅ Yes |
-| `"a"` | Append | No | ✅ Yes |
-| `"r+"` | Read + Write | No | ❌ No |
-| `"w+"` | Write + Read | ✅ Yes | ✅ Yes |
-| `"a+"` | Append + Read | No | ✅ Yes |
+| Mode   | Meaning                | Erases Existing Content? | Creates File if Missing?           |
+| ------ | ---------------------- | ------------------------ | ---------------------------------- |
+| `"r"`  | Read (file must exist) | No                       | ❌ No — raises `FileNotFoundError` |
+| `"w"`  | Write                  | ✅ Yes                   | ✅ Yes                             |
+| `"a"`  | Append                 | No                       | ✅ Yes                             |
+| `"r+"` | Read + Write           | No                       | ❌ No                              |
+| `"w+"` | Write + Read           | ✅ Yes                   | ✅ Yes                             |
+| `"a+"` | Append + Read          | No                       | ✅ Yes                             |
 
 ---
 
@@ -109,6 +110,7 @@ with open("notes.txt", "w") as file:
 ```
 
 Output:
+
 ```
 Apple
 ball
@@ -150,6 +152,7 @@ Always call `seek(0)` before reading if you just wrote to the file in the same b
 ## 9. Alternate Writing Methods
 
 **writelines() — write a list of lines at once**
+
 ```python
 with open("notes.txt", "w") as file:
     lines = ["Apple\n", "ball\n"]
@@ -157,6 +160,7 @@ with open("notes.txt", "w") as file:
 ```
 
 **print() with file= — auto-adds newline**
+
 ```python
 with open("notes.txt", "w") as file:
     print("Apple", file=file)
@@ -195,4 +199,4 @@ except FileNotFoundError:
 
 ---
 
-<p align="center">📁 Part of <b>python/basic/concepts</b></p>
+<p align="center">📁 Part of <b>python/learning/concepts</b></p>

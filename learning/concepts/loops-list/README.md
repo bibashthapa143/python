@@ -9,6 +9,7 @@
 ---
 
 ## 📑 Table of Contents
+
 - [Part 1: Loops](#-part-1-loops)
   - [1. for Loop](#1-for-loop)
   - [2. while Loop](#2-while-loop)
@@ -163,19 +164,19 @@ print(numbers[::-1])   # [5, 4, 3, 2, 1, 0] — reversed
 
 ## 11. Common List Methods
 
-| Method | What it does | Example |
-|---|---|---|
-| `.append(x)` | Add item to end | `fruits.append("kiwi")` |
-| `.insert(i, x)` | Insert at index | `fruits.insert(1, "kiwi")` |
-| `.remove(x)` | Remove first matching value | `fruits.remove("apple")` |
-| `.pop(i)` | Remove & return item at index (default: last) | `fruits.pop()` |
-| `.sort()` | Sort in place | `numbers.sort()` |
-| `.reverse()` | Reverse in place | `numbers.reverse()` |
-| `.index(x)` | Find index of value | `fruits.index("mango")` |
-| `.count(x)` | Count occurrences | `numbers.count(2)` |
-| `.extend(list)` | Add all items from another list | `fruits.extend(["kiwi", "pear"])` |
-| `.clear()` | Remove all items | `fruits.clear()` |
-| `len(list)` | Number of items | `len(fruits)` |
+| Method          | What it does                                  | Example                           |
+| --------------- | --------------------------------------------- | --------------------------------- |
+| `.append(x)`    | Add item to end                               | `fruits.append("kiwi")`           |
+| `.insert(i, x)` | Insert at index                               | `fruits.insert(1, "kiwi")`        |
+| `.remove(x)`    | Remove first matching value                   | `fruits.remove("apple")`          |
+| `.pop(i)`       | Remove & return item at index (default: last) | `fruits.pop()`                    |
+| `.sort()`       | Sort in place                                 | `numbers.sort()`                  |
+| `.reverse()`    | Reverse in place                              | `numbers.reverse()`               |
+| `.index(x)`     | Find index of value                           | `fruits.index("mango")`           |
+| `.count(x)`     | Count occurrences                             | `numbers.count(2)`                |
+| `.extend(list)` | Add all items from another list               | `fruits.extend(["kiwi", "pear"])` |
+| `.clear()`      | Remove all items                              | `fruits.clear()`                  |
+| `len(list)`     | Number of items                               | `len(fruits)`                     |
 
 ## 12. List Comprehensions
 
@@ -262,4 +263,4 @@ copy_right = list(original)
 
 ---
 
-<p align="center">📁 Part of <b>python/basic/concepts</b></p>
+<p align="center">📁 Part of <b>python/learning/concepts</b></p>

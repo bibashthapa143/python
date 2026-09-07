@@ -9,6 +9,7 @@
 ---
 
 ## 📑 Table of Contents
+
 - [What is a String?](#-what-is-a-string)
 - [1. Creating Strings](#1-creating-strings)
 - [2. Indexing & Slicing](#2-indexing--slicing)
@@ -103,20 +104,20 @@ print("%s is %d years old" % (name, age))
 
 ## 6. Common String Methods
 
-| Method | What it does | Example |
-|---|---|---|
-| `.lower()` | Convert to lowercase | `"HELLO".lower()` → `"hello"` |
-| `.upper()` | Convert to uppercase | `"hello".upper()` → `"HELLO"` |
-| `.strip()` | Remove leading/trailing whitespace | `"  hi  ".strip()` → `"hi"` |
-| `.replace(a, b)` | Replace substring | `"cat".replace("c", "b")` → `"bat"` |
-| `.split(sep)` | Split into a list | `"a,b,c".split(",")` → `['a','b','c']` |
-| `.join(list)` | Join list into a string | `"-".join(["a","b"])` → `"a-b"` |
-| `.find(sub)` | Index of first match (-1 if not found) | `"hello".find("l")` → `2` |
-| `.count(sub)` | Count occurrences | `"hello".count("l")` → `2` |
-| `.startswith(x)` | Check start | `"hello".startswith("he")` → `True` |
-| `.endswith(x)` | Check end | `"hello".endswith("lo")` → `True` |
-| `.title()` | Capitalize each word | `"hello world".title()` → `"Hello World"` |
-| `len(str)` | Length of string | `len("hello")` → `5` |
+| Method           | What it does                           | Example                                   |
+| ---------------- | -------------------------------------- | ----------------------------------------- |
+| `.lower()`       | Convert to lowercase                   | `"HELLO".lower()` → `"hello"`             |
+| `.upper()`       | Convert to uppercase                   | `"hello".upper()` → `"HELLO"`             |
+| `.strip()`       | Remove leading/trailing whitespace     | `"  hi  ".strip()` → `"hi"`               |
+| `.replace(a, b)` | Replace substring                      | `"cat".replace("c", "b")` → `"bat"`       |
+| `.split(sep)`    | Split into a list                      | `"a,b,c".split(",")` → `['a','b','c']`    |
+| `.join(list)`    | Join list into a string                | `"-".join(["a","b"])` → `"a-b"`           |
+| `.find(sub)`     | Index of first match (-1 if not found) | `"hello".find("l")` → `2`                 |
+| `.count(sub)`    | Count occurrences                      | `"hello".count("l")` → `2`                |
+| `.startswith(x)` | Check start                            | `"hello".startswith("he")` → `True`       |
+| `.endswith(x)`   | Check end                              | `"hello".endswith("lo")` → `True`         |
+| `.title()`       | Capitalize each word                   | `"hello world".title()` → `"Hello World"` |
+| `len(str)`       | Length of string                       | `len("hello")` → `5`                      |
 
 ---
 
@@ -153,13 +154,13 @@ print(joined)                      # apple, banana, mango
 
 ## 9. Escape Characters
 
-| Escape | Meaning |
-|---|---|
-| `\n` | New line |
-| `\t` | Tab |
-| `\\` | Backslash |
-| `\'` | Single quote |
-| `\"` | Double quote |
+| Escape | Meaning      |
+| ------ | ------------ |
+| `\n`   | New line     |
+| `\t`   | Tab          |
+| `\\`   | Backslash    |
+| `\'`   | Single quote |
+| `\"`   | Double quote |
 
 ```python
 print("Line1\nLine2")     # prints on two lines
@@ -227,4 +228,4 @@ path = r"C:\new_folder"     # ✅ raw string — backslash is literal
 
 ---
 
-<p align="center">📁 Part of <b>python/basic/concepts</b></p>
+<p align="center">📁 Part of <b>python/learning/concepts</b></p>

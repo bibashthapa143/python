@@ -9,16 +9,17 @@
 ---
 
 ## 📑 Table of Contents
+
 - [What is a Function?](#-what-is-a-function)
 - [1. Basic Function](#1-basic-function)
 - [2. Parameters vs Arguments](#2-parameters-vs-arguments)
 - [3. Return Values](#3-return-values)
 - [4. Default Parameters](#4-default-parameters)
 - [5. Positional vs Keyword Arguments](#5-positional-vs-keyword-arguments)
-- [6. *args — Flexible Positional Arguments](#6-args--flexible-positional-arguments)
-- [7. **kwargs — Flexible Keyword Arguments](#7-kwargs--flexible-keyword-arguments)
+- [6. \*args — Flexible Positional Arguments](#6-args--flexible-positional-arguments)
+- [7. \*\*kwargs — Flexible Keyword Arguments](#7-kwargs--flexible-keyword-arguments)
 - [8. Combining Everything](#8-combining-everything)
-- [9. Unpacking with * and ** (Calling Functions)](#9-unpacking-with--and--calling-functions)
+- [9. Unpacking with \* and \*\* (Calling Functions)](#9-unpacking-with--and--calling-functions)
 - [10. Keyword-Only Arguments](#10-keyword-only-arguments)
 - [11. Lambda Functions](#11-lambda-functions)
 - [12. Scope — Local vs Global](#12-scope--local-vs-global)
@@ -84,6 +85,7 @@ greet("Eros", "Hey")      # Hey, Eros!
 > 🔹 A default value makes a parameter **optional**. Skip it → default is used. Pass it → your value overrides the default.
 
 ⚠️ Default parameters must come **after** required (non-default) ones:
+
 ```python
 def greet(greeting="Hello", name):   # ❌ SyntaxError
 ```
@@ -102,7 +104,7 @@ profile(age=20, name="Eros") # keyword — order doesn't matter
 
 ---
 
-## 6. *args — Flexible Positional Arguments
+## 6. \*args — Flexible Positional Arguments
 
 Collects any number of positional arguments into a **tuple**.
 
@@ -117,6 +119,7 @@ add()              # () -> 0
 ```
 
 More examples:
+
 ```python
 def multiply(*numbers):
     result = 1
@@ -132,7 +135,7 @@ def find_max(*numbers):
 
 ---
 
-## 7. **kwargs — Flexible Keyword Arguments
+## 7. \*\*kwargs — Flexible Keyword Arguments
 
 Collects any number of named arguments into a **dictionary**.
 
@@ -144,6 +147,7 @@ show_info(name="Eros", age=20)
 ```
 
 More examples:
+
 ```python
 def print_receipt(**items):
     total = 0
@@ -177,6 +181,7 @@ profile(
 ```
 
 Output:
+
 ```
 Hey, Eros!
 Hobbies: ('coding', 'gaming')
@@ -187,7 +192,7 @@ Extra info: {'college': 'Morgan International College', 'age': 20}
 
 ---
 
-## 9. Unpacking with * and ** (Calling Functions)
+## 9. Unpacking with \* and \*\* (Calling Functions)
 
 `*` and `**` aren't just for function definitions — they also **unpack** collections when calling a function.
 
@@ -205,9 +210,9 @@ options = {"theme": "dark", "font_size": 14}
 configure(**options)  # same as configure(theme="dark", font_size=14)
 ```
 
-| Context | Meaning |
-|---|---|
-| `*args` / `**kwargs` in `def` | **Packing** — collect extra arguments |
+| Context                               | Meaning                                            |
+| ------------------------------------- | -------------------------------------------------- |
+| `*args` / `**kwargs` in `def`         | **Packing** — collect extra arguments              |
 | `*list` / `**dict` in a function call | **Unpacking** — spread a collection into arguments |
 
 ---
@@ -255,6 +260,7 @@ print(x)    # 10
 ```
 
 To modify a global variable inside a function, use `global`:
+
 ```python
 def update():
     global x
@@ -299,4 +305,4 @@ print(add.__doc__)   # Returns the sum of a and b.
 
 ---
 
-<p align="center">📁 Part of <b>python/basic/concepts</b></p>
+<p align="center">📁 Part of <b>python/learning/concepts</b></p>

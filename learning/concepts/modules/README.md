@@ -9,6 +9,7 @@
 ---
 
 ## 📑 Table of Contents
+
 - [What is a Module?](#-what-is-a-module)
 - [1. Importing a Module](#1-importing-a-module)
 - [2. Import Variations](#2-import-variations)
@@ -59,18 +60,19 @@ sqrt(16)     # no need for math. prefix
 from math import *
 ```
 
-| Style | When to use |
-|---|---|
-| `import module` | Default, clearest — shows where functions come from |
-| `import module as alias` | Long/common module names (`pandas as pd`) |
-| `from module import x` | Only need one or two specific things |
-| `from module import *` | Avoid — makes code hard to read/debug |
+| Style                    | When to use                                         |
+| ------------------------ | --------------------------------------------------- |
+| `import module`          | Default, clearest — shows where functions come from |
+| `import module as alias` | Long/common module names (`pandas as pd`)           |
+| `from module import x`   | Only need one or two specific things                |
+| `from module import *`   | Avoid — makes code hard to read/debug               |
 
 ---
 
 ## 3. Creating Your Own Module
 
 **`mymath.py`**
+
 ```python
 def add(a, b):
     return a + b
@@ -82,6 +84,7 @@ PI = 3.14159
 ```
 
 **`main.py`** (same folder)
+
 ```python
 import mymath
 
@@ -98,6 +101,7 @@ print(mymath.PI)              # 3.14159
 Lets a file behave differently depending on whether it's **run directly** or **imported**.
 
 **`mymath.py`**
+
 ```python
 def add(a, b):
     return a + b
@@ -138,16 +142,16 @@ add(2, 3)
 
 ## 6. Useful Built-in Modules
 
-| Module | Purpose | Example |
-|---|---|---|
-| `math` | Math functions/constants | `math.sqrt(9)`, `math.pi` |
-| `random` | Random values | `random.randint(1, 10)`, `random.choice(list)` |
-| `os` | OS-level operations (files, paths, env) | `os.getcwd()`, `os.listdir()` |
-| `sys` | Interpreter/system info | `sys.argv`, `sys.exit()` |
-| `datetime` | Dates and times | `datetime.now()` |
-| `json` | Read/write JSON data | `json.load(file)`, `json.dumps(data)` |
-| `time` | Time-related functions | `time.sleep(2)` |
-| `re` | Regular expressions | `re.match(pattern, text)` |
+| Module     | Purpose                                 | Example                                        |
+| ---------- | --------------------------------------- | ---------------------------------------------- |
+| `math`     | Math functions/constants                | `math.sqrt(9)`, `math.pi`                      |
+| `random`   | Random values                           | `random.randint(1, 10)`, `random.choice(list)` |
+| `os`       | OS-level operations (files, paths, env) | `os.getcwd()`, `os.listdir()`                  |
+| `sys`      | Interpreter/system info                 | `sys.argv`, `sys.exit()`                       |
+| `datetime` | Dates and times                         | `datetime.now()`                               |
+| `json`     | Read/write JSON data                    | `json.load(file)`, `json.dumps(data)`          |
+| `time`     | Time-related functions                  | `time.sleep(2)`                                |
+| `re`       | Regular expressions                     | `re.match(pattern, text)`                      |
 
 ```python
 import random
@@ -172,6 +176,7 @@ print(response.status_code)
 ```
 
 > 🔹 Third-party modules are listed in a project's `requirements.txt` so others can install the same dependencies:
+>
 > ```bash
 > pip freeze > requirements.txt
 > pip install -r requirements.txt
@@ -208,7 +213,7 @@ help(math.sqrt)       # shows documentation for a specific function
 
 ## ⚠️ Common Pitfalls
 
-- **Naming your own file the same as a built-in module** (e.g. `random.py`) — Python imports *your* file instead of the built-in one, causing confusing errors.
+- **Naming your own file the same as a built-in module** (e.g. `random.py`) — Python imports _your_ file instead of the built-in one, causing confusing errors.
 - **`from module import *`** — makes it unclear where a function came from, and can silently override existing names.
 - **Circular imports** — two modules importing each other directly can cause `ImportError`. Restructure code to avoid the cycle.
 - **Forgetting `__init__.py`** in older Python versions — needed to mark a folder as a package (optional in Python 3.3+, but still common practice).
@@ -216,4 +221,4 @@ help(math.sqrt)       # shows documentation for a specific function
 
 ---
 
-<p align="center">📁 Part of <b>python/basic/concepts</b></p>
+<p align="center">📁 Part of <b>python/learning/concepts</b></p>
