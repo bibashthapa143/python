@@ -21,18 +21,18 @@ This repo tracks my journey learning Python — from core syntax to real, workin
 ## 📁 Structure
 
 ```
-basic/
+learning/
 ├── concepts/       # syntax drills & concept notes (error handling, functions, files, etc.)
 └── theory_Notes/   # quick-reference cheatsheet — definition, syntax, example
 
 projects/           # real mini-projects, one folder each
 ```
 
-| Folder | What's Inside |
-|---|---|
-| [`basic/concepts/`](basic/concepts) | 📚 In-depth notes + code examples for each Python concept learned |
-| [`basic/theory_Notes/`](basic/theory_Notes) | ⚡ Quick-reference cheatsheet — definition → syntax → example, for fast revision |
-| [`projects/`](projects) | 🛠️ Standalone tools, each with its own README |
+| Folder                                            | What's Inside                                                                    |
+| ------------------------------------------------- | -------------------------------------------------------------------------------- |
+| [`learning/concepts/`](learning/concepts)         | 📚 In-depth notes + code examples for each Python concept learned                |
+| [`learning/theory_Notes/`](learning/theory_Notes) | ⚡ Quick-reference cheatsheet — definition → syntax → example, for fast revision |
+| [`projects/`](projects)                           | 🛠️ Standalone tools, each with its own README                                    |
 
 ---
 
@@ -46,7 +46,7 @@ Every project lives in its own folder with a full write-up — see the live, aut
 
 ## 🧠 Learning Log
 
-Every concept practiced here is documented in [`basic/concepts/`](basic/concepts) — think of it as a personal Python reference built one topic at a time, complete with explanations and runnable examples.
+Every concept practiced here is documented in [`learning/concepts/`](learning/concepts) — think of it as a personal Python reference built one topic at a time, complete with explanations and runnable examples.
 
 ---
 
