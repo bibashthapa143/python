@@ -4,3 +4,4 @@ tempCodeRunner*
 .venv/
 *.pyc
 .vscode
+.txt
