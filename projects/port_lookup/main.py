@@ -9,13 +9,33 @@ def lookup_services(port, services_dict):
     return services_dict.get(port, "notfound")
 
 
+def get_valid_port(prompt):
+    """Keep asking until the user gives an integer between 0 and 65535."""
+    while True:
+        try:
+            port = int(input(prompt))
+        except ValueError:
+            print("Invalid input — please enter a whole number.")
+            continue
+
+        if port < 0 or port > 65535:
+            print("Port must be between 0 and 65535.")
+            continue
+
+        return port
+
+
 # ============================================================================
 # MODE 1: RANGE LOOKUP  (look up a range of ports against the dictionary)
 # ============================================================================
 
 def lookup_range():
-    start_port = int(input("Enter start port: "))
-    end_port = int(input("Enter end port: "))
+    start_port = get_valid_port("Enter start port: ")
+    end_port = get_valid_port("Enter end port: ")
+
+    if start_port > end_port:
+        start_port, end_port = end_port, start_port   # swap so the range always makes sense
+        print(f"Swapped order — scanning {start_port} to {end_port}")
 
     for port in range(start_port, end_port + 1):
         service = lookup_services(port, port_services)
@@ -28,15 +48,36 @@ def lookup_range():
 # ============================================================================
 
 def lookup_from_file(input_file="ports_input.txt", output_file="ports_output.txt"):
-    with open(input_file, "r") as infile, open(output_file, "w") as outfile:
-        for line in infile:
-            line = line.strip()
-            try:
-                port = int(line)
-                service = lookup_services(port, port_services)
-                outfile.write(f"{port}: {service}\n")
-            except ValueError:
-                outfile.write(f"Skipping invalid entry: {line}\n")
+    try:
+        infile = open(input_file, "r")
+    except FileNotFoundError:
+        print(f"Error: '{input_file}' not found. Check the filename/path and try again.")
+        return
+    except PermissionError:
+        print(f"Error: no permission to read '{input_file}'.")
+        return
+
+    try:
+        with infile, open(output_file, "w") as outfile:
+            for line in infile:
+                line = line.strip()
+                if not line:
+                    continue                          # skip blank lines quietly
+                try:
+                    port = int(line)
+                    if port < 0 or port > 65535:
+                        outfile.write(f"Skipping out-of-range port: {line}\n")
+                        continue
+                    service = lookup_services(port, port_services)
+                    outfile.write(f"{port}: {service}\n")
+                except ValueError:
+                    outfile.write(f"Skipping invalid entry: {line}\n")
+    except PermissionError:
+        print(f"Error: no permission to write '{output_file}'.")
+        return
+    except OSError as e:
+        print(f"Unexpected file error: {e}")
+        return
 
     print(f"Done! Check {output_file}")
 
@@ -54,8 +95,13 @@ def scan_port(target, port):
     except socket.gaierror:
         sock.close()                                              # close before exiting
         return "invalid_address"                                  # signal: stop scanning entirely
-    except socket.error:
-        result = -1                                                # treat any other socket error as closed/unreachable
+    except socket.timeout:
+        sock.close()
+        return "closed"                                            # timeout = treat as closed, keep scanning
+    except OSError as e:
+        sock.close()
+        print(f"Socket error on port {port}: {e}")
+        return "closed"                                            # treat any other socket error as closed/unreachable
 
     sock.close()                                                  # always close the connection when done
     service = port_services.get(port, "Unknown service")          # look up the service name for this port
@@ -72,7 +118,10 @@ def scan_port(target, port):
 # ============================================================================
 
 def live_scan():
-    target = input("Enter target IP to scan: ")                   # ask user which address to scan
+    target = input("Enter target IP to scan: ").strip()           # ask user which address to scan
+    if not target:
+        print("Error: target cannot be empty.")
+        return
 
     while True:
         try:
@@ -80,6 +129,10 @@ def live_scan():
             start, end = port_range.split("-")
             start = int(start)
             end = int(end)
+
+            if start < 0 or end > 65535:
+                print("Ports must be between 0 and 65535.")
+                continue
 
             if start > end:
                 start, end = end, start       # swap them automatically
