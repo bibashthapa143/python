@@ -15,7 +15,7 @@
 <!-- AUTO-GENERATED-CONTENT:START -->
 | Project | Description | Status |
 |---|---|---|
-| [🔍 Port Lookup](port_lookup) | A lightweight Python tool that maps ports to their common services — the first step toward a full-blown port scanner. | 🚧 In Progress |
+| [🔍 Port Lookup](port_lookup) | A Python CLI tool that looks up port-to-service mappings and performs live TCP port scans — offline reference lookup and real network scanning in one tool. | 🚧 In Progress |
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 > 🔄 *This table updates itself automatically on every push — see [`.github/workflows/update-projects-readme.yml`](../.github/workflows/update-projects-readme.yml)*
