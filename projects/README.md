@@ -1,56 +1,113 @@
-# 📁 Projects
+# 🔍 Port Lookup
 
-![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
-![Focus](https://img.shields.io/badge/Focus-Security%20Automation-critical)
-![Status](https://img.shields.io/badge/Status-Actively%20Building-brightgreen)
+> A Python CLI tool that looks up port-to-service mappings and performs live TCP port scans — offline reference lookup and real network scanning in one tool.
 
-> Real, working tools built while learning Python for security automation. Each folder is a standalone mini-project — see its own README for details.
-
-<!-- New project READMEs must start with: # Title, then a blank line, then a "> description" line, then a blank line, then "Status: <emoji + text>" — required for the auto-generator script to detect the project correctly. -->
+Status: 🚧 In Progress
 
 ---
 
-## 🗂️ Project Index
+## 📖 Overview
 
-<!-- AUTO-GENERATED-CONTENT:START -->
-| Project | Description | Status |
-|---|---|---|
-| [🔍 Port Lookup](port_lookup) | A lightweight Python tool that maps ports to their common services — the first step toward a full-blown port scanner. | 🚧 In Progress |
-<!-- AUTO-GENERATED-CONTENT:END -->
-
-> 🔄 *This table updates itself automatically on every push — see [`.github/workflows/update-projects-readme.yml`](../.github/workflows/update-projects-readme.yml)*
+Port Lookup started as a simple dictionary lookup (port number → service name) and has grown into a small toolkit with three modes: offline range lookup, offline file-based lookup, and a real live network port scanner using Python's `socket` module.
 
 ---
 
-## 🎯 Goals
+## 🗂️ Files
 
-- Turn Python fundamentals into real, working command-line tools
-- Build a foundation for offensive/defensive security automation
-- Practice writing clean, documented, reusable code — not just scripts
-- Build a visible track record of hands-on security tooling for a developer/security portfolio
-
----
-
-## 🎯 Why Each Project
-
-| Project | Purpose |
+| File | Purpose |
 |---|---|
-| [🔍 Port Lookup](port_lookup) | **Understand port scanning & service mapping** |
+| `main.py` | Entry point — lets you choose a mode and runs the corresponding logic |
+| `services.py` | Holds the `port_services` dictionary (port → service name), kept separate from logic |
+| `ports_input.txt` | Sample input file for file-lookup mode (one port per line) |
+| `ports_output.txt` | Generated output from file-lookup mode |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Usage
 
-Each project is self-contained — clone the repo, move into a project folder, and run it directly.
+Run the script and choose a mode when prompted:
 
 ```bash
-git clone https://github.com/bibashthapa143/python.git
-cd python/projects/<project-folder>
-python <script>.py
+python main.py
 ```
 
-Check each project's own `README.md` for specific setup steps, dependencies, or usage examples.
+```
+Choose mode - (r)ange lookup, (f)ile lookup, (s)can live:
+```
+
+### Mode `r` — Range Lookup
+
+Checks a range of port numbers against the known `port_services` dictionary. Purely offline — doesn't touch the network.
+
+```
+Enter start port: 20
+Enter end port: 100
+
+Port 21 -> FTP
+Port 22 -> SSH
+Port 25 -> SMTP
+Port 53 -> DNS
+Port 80 -> HTTP
+```
+
+### Mode `f` — File Lookup
+
+Reads ports from `ports_input.txt` (one per line), looks each one up, and writes the results to `ports_output.txt`. Invalid lines are logged instead of crashing the program.
+
+**`ports_input.txt`**
+```
+22
+80
+443
+9999
+abc
+```
+
+**`ports_output.txt`** (generated)
+```
+22: SSH
+80: HTTP
+443: HTTPS
+9999: notfound
+Skipping invalid entry: abc
+```
+
+### Mode `s` — Live Scan
+
+Actually connects to a real target over the network to check which ports are genuinely open. Uses a TCP connection attempt (`socket.connect_ex`) with a 1-second timeout per port.
+
+```
+Enter target IP to scan: 192.168.1.1
+Enter port range (e.g. 1-100): 1-100
+
+scanning from 1 to 100
+Port 80 (HTTP): OPEN
+Port 443 (HTTPS): OPEN
+```
+
+Handles invalid/unreachable addresses gracefully and stops the scan early instead of crashing.
 
 ---
 
-<p align="center">🔐 Building toward practical security automation, one project at a time.</p>
+## 🧠 How It Works
+
+- **`port_services`** (in `services.py`) is a dictionary mapping known port numbers to service names — the shared reference data used by all three modes.
+- **`lookup_services()`** does a simple dictionary `.get()` lookup with a fallback for unknown ports.
+- **`scan_port()`** opens a real TCP socket connection to a given `(target, port)` pair. A `connect_ex()` result of `0` means the connection succeeded — the port is open and something is actively listening.
+- Each mode is its own function (`lookup_range`, `lookup_from_file`, `live_scan`), called based on the user's menu choice in `if __name__ == "__main__":`.
+
+---
+
+## ⚙️ Requirements
+
+- Python 3.x
+- No external packages — uses only the standard library (`socket`)
+
+---
+
+## 🗺️ Possible Next Steps
+
+- [ ] Multi-threaded scanning for faster live scans
+- [ ] Export live scan results to a file (like file-lookup mode does)
+- [ ] Command-line arguments instead of interactive prompts
+- [ ] Banner grabbing to identify service versions on open ports
