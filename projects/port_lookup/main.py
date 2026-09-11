@@ -1,10 +1,17 @@
 import socket                                                    # built-in module for network connections
 from services import port_services                               # port -> service name mapping, kept separate
 
+# ============================================================================
+# SHARED HELPER
+# ============================================================================
 
 def lookup_services(port, services_dict):
     return services_dict.get(port, "notfound")
 
+
+# ============================================================================
+# MODE 1: RANGE LOOKUP  (look up a range of ports against the dictionary)
+# ============================================================================
 
 def lookup_range():
     start_port = int(input("Enter start port: "))
@@ -15,6 +22,10 @@ def lookup_range():
         if service != "notfound":
             print(f"Port {port} -> {service}")
 
+
+# ============================================================================
+# MODE 2: FILE LOOKUP  (read ports from a file, write results to another)
+# ============================================================================
 
 def lookup_from_file(input_file="ports_input.txt", output_file="ports_output.txt"):
     with open(input_file, "r") as infile, open(output_file, "w") as outfile:
@@ -29,6 +40,10 @@ def lookup_from_file(input_file="ports_input.txt", output_file="ports_output.txt
 
     print(f"Done! Check {output_file}")
 
+
+# ============================================================================
+# MODE 3: LIVE SCAN — CORE SCANNING LOGIC
+# ============================================================================
 
 def scan_port(target, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)     # create a TCP connection tool (boilerplate)
@@ -51,6 +66,10 @@ def scan_port(target, port):
 
     return "closed"                                                # signal: normal result, keep scanning
 
+
+# ============================================================================
+# MODE 3: LIVE SCAN — USER-FACING LOOP
+# ============================================================================
 
 def live_scan():
     target = input("Enter target IP to scan: ")                   # ask user which address to scan
@@ -87,6 +106,10 @@ def live_scan():
     if not found_open and status != "invalid_address":
         print("No open ports found in that range.")
 
+
+# ============================================================================
+# ENTRY POINT
+# ============================================================================
 
 if __name__ == "__main__":
     mode = input("Choose mode - (r)ange lookup, (f)ile lookup, (s)can live: ").strip().lower()
