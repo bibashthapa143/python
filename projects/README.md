@@ -16,7 +16,7 @@
 | Project | Description | Status |
 |---|---|---|
 | [🔍 Port Lookup](port_lookup) | A Python CLI tool that looks up port-to-service mappings and performs live TCP port scans — offline reference lookup and real network scanning in one tool. | 🚧 In Progress |
-| [🔐 Wi-Fi Password Extractor](wifi-password-extractor) | — | 🚧 In Progress |
+| [🔐 Wi-Fi Password Extractor](wifi-password-extractor) | A simple Python script that extracts saved Wi-Fi network names and their passwords from a Windows machine using the built-in `netsh` command — no external libraries required. | 🚧 In Progress |
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 > 🔄 *This table updates itself automatically on every push — see [`.github/workflows/update-projects-readme.yml`](../.github/workflows/update-projects-readme.yml)*
