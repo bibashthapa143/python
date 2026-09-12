@@ -5,7 +5,7 @@
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
-A simple Python script that extracts saved Wi-Fi network names and their passwords from a Windows machine using the built-in `netsh` command — no external libraries required.
+> A simple Python script that extracts saved Wi-Fi network names and their passwords from a Windows machine using the built-in `netsh` command — no external libraries required.
 
 ---
 
