@@ -115,3 +115,4 @@ if __name__ == "__main__":
     else:
         # No CLI args given — fall back to interactive prompts
         live_scan()
+        
