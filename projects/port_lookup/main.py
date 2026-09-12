@@ -1,6 +1,40 @@
 import socket                                                    # built-in module for network connections
 import argparse                                                  # for parsing command-line flags
+import logging                                                   # for logging scan activity to console + file
 from services import port_services                               # port -> service name mapping, kept separate
+
+# ============================================================================
+# LOGGING SETUP
+# ============================================================================
+
+def setup_logging():
+    logger = logging.getLogger("port_scanner")
+    logger.setLevel(logging.INFO)
+    logger.handlers.clear()   # avoid duplicate handlers if setup_logging() is ever called twice
+
+    formatter = logging.Formatter(
+        fmt="%(asctime)s [%(levelname)s] %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S"
+    )
+
+    # Console handler — shows in terminal while scanning
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    console_handler.setFormatter(formatter)
+
+    # File handler — keeps a permanent record in scan.log
+    file_handler = logging.FileHandler("scan.log")
+    file_handler.setLevel(logging.INFO)
+    file_handler.setFormatter(formatter)
+
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+
+    return logger
+
+
+logger = setup_logging()
+
 
 # ============================================================================
 # CORE SCANNING LOGIC
@@ -14,20 +48,21 @@ def scan_port(target, port):
         result = sock.connect_ex((target, port))                  # try connecting; 0 = success (open)
     except socket.gaierror:
         sock.close()                                              # close before exiting
+        logger.error(f"Invalid or unreachable address: {target}")
         return "invalid_address"                                  # signal: stop scanning entirely
     except socket.timeout:
         sock.close()
         return "closed"                                            # timeout = treat as closed, keep scanning
     except OSError as e:
         sock.close()
-        print(f"Socket error on port {port}: {e}")
+        logger.warning(f"Socket error on port {port}: {e}")
         return "closed"                                            # treat any other socket error as closed/unreachable
 
     sock.close()                                                  # always close the connection when done
     service = port_services.get(port, "Unknown service")          # look up the service name for this port
 
     if result == 0:
-        print(f"Port {port} ({service}): OPEN")                   # connection succeeded
+        logger.info(f"Port {port} ({service}): OPEN")             # connection succeeded
         return "open"                                              # signal: this port was open
 
     return "closed"                                                # signal: normal result, keep scanning
@@ -44,7 +79,7 @@ def live_scan(target=None, port_range=None):
         target = target.strip()
 
     if not target:
-        print("Error: target cannot be empty.")
+        logger.error("Target cannot be empty.")
         return
 
     while True:
@@ -64,12 +99,13 @@ def live_scan(target=None, port_range=None):
             if start > end:
                 start, end = end, start       # swap them automatically
 
-            print(f"scanning from {start} to {end}")
             break     # valid input received, exit the loop
 
         except ValueError:
             print("Invalid range format. Please use format like 1-100")
             port_range = None
+
+    logger.info(f"Starting scan on {target}, ports {start}-{end}")
 
     found_open = False                                             # track whether any open port was found
     status = None
@@ -78,14 +114,17 @@ def live_scan(target=None, port_range=None):
         status = scan_port(target, port)
 
         if status == "invalid_address":
-            print("Invalid or unreachable address — stopping scan.")
             break                                                   # exit the loop early, don't check remaining ports
 
         if status == "open":
             found_open = True                                      # remember that we found at least one
 
-    if not found_open and status != "invalid_address":
-        print("No open ports found in that range.")
+    if status == "invalid_address":
+        logger.info(f"Scan stopped early for {target} due to invalid address.")
+    elif not found_open:
+        logger.info(f"Scan complete for {target}: no open ports found in range {start}-{end}.")
+    else:
+        logger.info(f"Scan complete for {target}.")
 
 
 # ============================================================================
@@ -115,4 +154,3 @@ if __name__ == "__main__":
     else:
         # No CLI args given — fall back to interactive prompts
         live_scan()
-        
