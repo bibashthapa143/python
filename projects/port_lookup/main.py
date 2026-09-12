@@ -1,89 +1,9 @@
 import socket                                                    # built-in module for network connections
+import argparse                                                  # for parsing command-line flags
 from services import port_services                               # port -> service name mapping, kept separate
 
 # ============================================================================
-# SHARED HELPER
-# ============================================================================
-
-def lookup_services(port, services_dict):
-    return services_dict.get(port, "notfound")
-
-
-def get_valid_port(prompt):
-    """Keep asking until the user gives an integer between 0 and 65535."""
-    while True:
-        try:
-            port = int(input(prompt))
-        except ValueError:
-            print("Invalid input — please enter a whole number.")
-            continue
-
-        if port < 0 or port > 65535:
-            print("Port must be between 0 and 65535.")
-            continue
-
-        return port
-
-
-# ============================================================================
-# MODE 1: RANGE LOOKUP  (look up a range of ports against the dictionary)
-# ============================================================================
-
-def lookup_range():
-    start_port = get_valid_port("Enter start port: ")
-    end_port = get_valid_port("Enter end port: ")
-
-    if start_port > end_port:
-        start_port, end_port = end_port, start_port   # swap so the range always makes sense
-        print(f"Swapped order — scanning {start_port} to {end_port}")
-
-    for port in range(start_port, end_port + 1):
-        service = lookup_services(port, port_services)
-        if service != "notfound":
-            print(f"Port {port} -> {service}")
-
-
-# ============================================================================
-# MODE 2: FILE LOOKUP  (read ports from a file, write results to another)
-# ============================================================================
-
-def lookup_from_file(input_file="ports_input.txt", output_file="ports_output.txt"):
-    try:
-        infile = open(input_file, "r")
-    except FileNotFoundError:
-        print(f"Error: '{input_file}' not found. Check the filename/path and try again.")
-        return
-    except PermissionError:
-        print(f"Error: no permission to read '{input_file}'.")
-        return
-
-    try:
-        with infile, open(output_file, "w") as outfile:
-            for line in infile:
-                line = line.strip()
-                if not line:
-                    continue                          # skip blank lines quietly
-                try:
-                    port = int(line)
-                    if port < 0 or port > 65535:
-                        outfile.write(f"Skipping out-of-range port: {line}\n")
-                        continue
-                    service = lookup_services(port, port_services)
-                    outfile.write(f"{port}: {service}\n")
-                except ValueError:
-                    outfile.write(f"Skipping invalid entry: {line}\n")
-    except PermissionError:
-        print(f"Error: no permission to write '{output_file}'.")
-        return
-    except OSError as e:
-        print(f"Unexpected file error: {e}")
-        return
-
-    print(f"Done! Check {output_file}")
-
-
-# ============================================================================
-# MODE 3: LIVE SCAN — CORE SCANNING LOGIC
+# CORE SCANNING LOGIC
 # ============================================================================
 
 def scan_port(target, port):
@@ -114,24 +34,31 @@ def scan_port(target, port):
 
 
 # ============================================================================
-# MODE 3: LIVE SCAN — USER-FACING LOOP
+# USER-FACING SCAN LOOP
 # ============================================================================
 
-def live_scan():
-    target = input("Enter target IP to scan: ").strip()           # ask user which address to scan
+def live_scan(target=None, port_range=None):
+    if target is None:
+        target = input("Enter target IP to scan: ").strip()       # ask user which address to scan
+    else:
+        target = target.strip()
+
     if not target:
         print("Error: target cannot be empty.")
         return
 
     while True:
         try:
-            port_range = input("Enter port range (e.g. 1-100): ")         # ask user for the range to scan
+            if port_range is None:
+                port_range = input("Enter port range (e.g. 1-100): ")     # ask user for the range to scan
+
             start, end = port_range.split("-")
             start = int(start)
             end = int(end)
 
             if start < 0 or end > 65535:
                 print("Ports must be between 0 and 65535.")
+                port_range = None
                 continue
 
             if start > end:
@@ -142,6 +69,7 @@ def live_scan():
 
         except ValueError:
             print("Invalid range format. Please use format like 1-100")
+            port_range = None
 
     found_open = False                                             # track whether any open port was found
     status = None
@@ -161,17 +89,29 @@ def live_scan():
 
 
 # ============================================================================
+# CLI ARGUMENT PARSING
+# ============================================================================
+
+def build_parser():
+    parser = argparse.ArgumentParser(
+        prog="port_scanner",
+        description="Live TCP port scanner — checks a host for open ports."
+    )
+    parser.add_argument("--host", help="Target IP or hostname")
+    parser.add_argument("--ports", help="Port range, e.g. 1-100")
+    return parser
+
+
+# ============================================================================
 # ENTRY POINT
 # ============================================================================
 
 if __name__ == "__main__":
-    mode = input("Choose mode - (r)ange lookup, (f)ile lookup, (s)can live: ").strip().lower()
+    parser = build_parser()
+    args = parser.parse_args()
 
-    if mode == "r":
-        lookup_range()
-    elif mode == "f":
-        lookup_from_file()
-    elif mode == "s":
-        live_scan()
+    if args.host and args.ports:
+        live_scan(args.host, args.ports)
     else:
-        print("Invalid choice. Enter 'r', 'f', or 's'.")
+        # No CLI args given — fall back to interactive prompts
+        live_scan()
