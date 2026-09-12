@@ -7,7 +7,7 @@ parser.add_argument("--operator", type=str)
 
 args = parser.parse_args()
 
-if args.op == "+":
+if args.operator == "+":
     print(args.a + args.b)
-elif args.op == "-":
+elif args.operator == "-":
     print(args.a - args.b)
