@@ -5,3 +5,4 @@ tempCodeRunner*
 *.pyc
 .vscode
 *.txt
+*.log
