@@ -4,14 +4,20 @@ import os
 print(os.listdir())
 
 import subprocess
-result = subprocess.run(["ls","-la"], capture_output=True, text=True)
-print(result.stdout)
+# result = subprocess.run(["ls","-la"], capture_output=True, text=True)
+# print(result.stdout)
+
+process = subprocess.Popen(["ping" , "google.com"], stdout=subprocess.PIPE, text=True)
+
+for line in process.stdout:
+    print(line.strip())
+
 
 '''
 List of popular libraries:
 OS
 Subprocess
-Socket
+Socket 
 Scapy
 Cryptography
 Requests
