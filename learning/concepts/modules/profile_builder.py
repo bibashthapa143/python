@@ -8,7 +8,7 @@ parser.add_argument("--student", action="store_true")
 args = parser.parse_args()
 print(f"Name : {args.name}")
 print(f"Age : {args.age}")
-if args.student == True:
+if args.student:
     print(f"Student")
 else:
     print("Not a student")
