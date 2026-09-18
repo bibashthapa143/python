@@ -1,4 +1,15 @@
 import subprocess
+import ctypes
+import sys
+
+
+def is_admin():
+    # Checks if the script is running with Administrator privileges (Windows only)
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except Exception:
+        return False
+
 
 def get_saved_wifi_passwords():
     # Get all saved Wi-Fi profile names from Windows
@@ -10,11 +21,18 @@ def get_saved_wifi_passwords():
     )
 
     # Extract profile names from lines like "All User Profile: MyWifi"
+    # Note: this match is English-only. On a non-English Windows install,
+    # this string is localized and profiles won't be detected.
     profiles = [
         line.split(":", 1)[1].strip()
         for line in result.splitlines()
         if "All User Profile" in line
     ]
+
+    if not profiles:
+        print("No Wi-Fi profiles found. If Windows isn't set to English, "
+              "the profile line text may be different and won't match.")
+        return
 
     for name in profiles:
         try:
@@ -45,5 +63,9 @@ def get_saved_wifi_passwords():
 
 
 if __name__ == "__main__":
-    # Only run when executed directly, not when imported as a module
+    # Warn upfront if not admin, since every password lookup will otherwise fail silently
+    if not is_admin():
+        print("Warning: Not running as Administrator.")
+        print("Passwords will show as 'Could not read profile' without admin rights.\n")
+
     get_saved_wifi_passwords()
