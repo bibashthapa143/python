@@ -13,6 +13,7 @@
 
 - 📡 Lists every Wi-Fi network saved on your machine
 - 🔑 Reveals the stored password for each network
+- 🛡️ Detects if not running as Administrator and warns upfront
 - ⚡ Pure Python standard library — no installs needed
 - 🪶 Lightweight — single script, runs instantly
 
@@ -20,9 +21,10 @@
 
 ## 🛠 How It Works
 
-1. Runs `netsh wlan show profiles` to list all saved Wi-Fi profiles
-2. For each profile, runs `netsh wlan show profile <name> key=clear` to reveal its password
-3. Parses and prints each network name alongside its password
+1. Checks if the script is running with Administrator privileges and warns if not
+2. Runs `netsh wlan show profiles` to list all saved Wi-Fi profiles
+3. For each profile, runs `netsh wlan show profile <name> key=clear` to reveal its password
+4. Parses and prints each network name alongside its password
 
 ---
 
@@ -32,25 +34,30 @@
 |---|---|
 | OS | Windows (uses `netsh`, a Windows-only tool) |
 | Python | 3.x |
-| Dependencies | None — built-in `subprocess` module only |
+| Dependencies | None — built-in `subprocess` and `ctypes` modules only |
+| Permissions | Administrator (required to reveal passwords with `key=clear`) |
 
 ---
 
 ## 🚀 Usage
 
-```bash
-python main.py
-```
+Run your terminal **as Administrator**, then:
+
+    python main.py
 
 **Example output:**
-```
-Wi-Fi: HomeNetwork
-Password: mypassword123
-------------------------------
-Wi-Fi: OfficeWiFi
-Password: No password found
-------------------------------
-```
+
+    Wi-Fi: HomeNetwork
+    Password: mypassword123
+    ------------------------------
+    Wi-Fi: OfficeWiFi
+    Password: No password found
+    ------------------------------
+
+If not run as Administrator, you'll see:
+
+    Warning: Not running as Administrator.
+    Passwords will show as 'Could not read profile' without admin rights.
 
 ---
 
@@ -68,8 +75,9 @@ Intended for:
 
 ## 📝 Notes
 
-- Run in a terminal with sufficient permissions to query network profiles.
+- Must be run with Administrator privileges, or passwords will not be readable.
 - Some profiles may show "No password found" if they use a different authentication method (e.g. open networks).
+- Profile detection currently matches English-language Windows output only (`"All User Profile"`); on a non-English Windows install, this string is localized and profiles may not be detected.
 
 ---
 
