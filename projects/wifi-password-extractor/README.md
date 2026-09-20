@@ -1,30 +1,55 @@
+<div align="center">
+
 # 🔐 Wi-Fi Password Extractor
 
-![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
-![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey?logo=windows)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/Status-Active-success)
+**Recover every Wi-Fi password saved on your Windows machine — instantly, with zero external dependencies.**
 
-> A simple Python script that extracts saved Wi-Fi network names and their passwords from a Windows machine using the built-in `netsh` command — no external libraries required.
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-brightgreen?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+
+</div>
+
+---
+
+### 📖 Overview
+
+A lightweight Python script that pulls every saved Wi-Fi network on a Windows machine and reveals its stored password — using nothing but the built-in `netsh` command. No installs, no third-party libraries, just pure Python.
 
 ---
 
 ## ✨ Features
 
-- 📡 Lists every Wi-Fi network saved on your machine
-- 🔑 Reveals the stored password for each network
-- 🛡️ Detects if not running as Administrator and warns upfront
-- ⚡ Pure Python standard library — no installs needed
-- 🪶 Lightweight — single script, runs instantly
+| | |
+|---|---|
+| 📡 **Full network scan** | Lists every Wi-Fi profile ever saved on the machine |
+| 🔑 **Password reveal** | Extracts the stored password for each network |
+| 🛡️ **Admin-aware** | Detects missing Administrator rights and warns before running |
+| ⚡ **Zero dependencies** | Pure Python standard library — nothing to `pip install` |
+| 🪶 **Single-file** | One script, runs instantly, no setup required |
 
 ---
 
 ## 🛠 How It Works
 
-1. Checks if the script is running with Administrator privileges and warns if not
-2. Runs `netsh wlan show profiles` to list all saved Wi-Fi profiles
-3. For each profile, runs `netsh wlan show profile <name> key=clear` to reveal its password
-4. Parses and prints each network name alongside its password
+```
+┌─────────────────────────┐
+│ 1. Check admin rights    │
+└────────────┬─────────────┘
+             ▼
+┌─────────────────────────┐
+│ 2. List saved profiles   │  netsh wlan show profiles
+└────────────┬─────────────┘
+             ▼
+┌─────────────────────────┐
+│ 3. Reveal each password  │  netsh wlan show profile <name> key=clear
+└────────────┬─────────────┘
+             ▼
+┌─────────────────────────┐
+│ 4. Print name + password │
+└─────────────────────────┘
+```
 
 ---
 
@@ -32,10 +57,10 @@
 
 | Requirement | Details |
 |---|---|
-| OS | Windows (uses `netsh`, a Windows-only tool) |
-| Python | 3.x |
-| Dependencies | None — built-in `subprocess` and `ctypes` modules only |
-| Permissions | Administrator (required to reveal passwords with `key=clear`) |
+| 🖥️ OS | Windows (uses `netsh`, a Windows-only tool) |
+| 🐍 Python | 3.x |
+| 📦 Dependencies | None — built-in `subprocess` and `ctypes` only |
+| 🔑 Permissions | Administrator (required for `key=clear`) |
 
 ---
 
@@ -43,44 +68,55 @@
 
 Run your terminal **as Administrator**, then:
 
-    python main.py
+```
+python main.py
+```
 
 **Example output:**
 
-    Wi-Fi: HomeNetwork
-    Password: mypassword123
-    ------------------------------
-    Wi-Fi: OfficeWiFi
-    Password: No password found
-    ------------------------------
+```
+Wi-Fi: HomeNetwork
+Password: mypassword123
+------------------------------
+Wi-Fi: OfficeWiFi
+Password: No password found
+------------------------------
+```
 
-If not run as Administrator, you'll see:
+**If not run as Administrator:**
 
-    Warning: Not running as Administrator.
-    Passwords will show as 'Could not read profile' without admin rights.
+```
+Warning: Not running as Administrator.
+Passwords will show as 'Could not read profile' without admin rights.
+```
 
 ---
 
 ## ⚠️ Disclaimer
 
-This tool only reveals passwords for Wi-Fi networks **already saved on the machine it's run on** — it cannot retrieve passwords for networks you haven't connected to, and it does not attack, crack, or bypass any network security.
+> This tool only reveals passwords for Wi-Fi networks **already saved on the machine it's run on** — it cannot retrieve passwords for networks you haven't connected to, and it does not attack, crack, or bypass any network security.
 
-Intended for:
-- ✅ Personal use — recovering your own forgotten Wi-Fi passwords
-- ✅ Educational purposes — understanding how Windows stores credentials locally
+**✅ Intended for:**
+- Personal use — recovering your own forgotten Wi-Fi passwords
+- Educational purposes — understanding how Windows stores credentials locally
 
-❌ Do not run this on a machine you don't own or don't have explicit permission to access.
+**❌ Not intended for:**
+- Running on a machine you don't own or don't have explicit permission to access
 
 ---
 
 ## 📝 Notes
 
-- Must be run with Administrator privileges, or passwords will not be readable.
-- Some profiles may show "No password found" if they use a different authentication method (e.g. open networks).
-- Profile detection currently matches English-language Windows output only (`"All User Profile"`); on a non-English Windows install, this string is localized and profiles may not be detected.
+- Must be run with Administrator privileges, or passwords will not be readable
+- Networks using non-key authentication may show `"No password found"`
+- Profile detection currently matches English-language Windows output only (`"All User Profile"`) — a non-English Windows install may not detect profiles
 
 ---
+
+<div align="center">
 
 ## 👤 Author
 
 Built by **Bibash** as part of a cybersecurity + Python learning journey.
+
+</div>
