@@ -1,5 +1,4 @@
-# Print odd numbers from 1 to 9
-for f in range(1, 11, 2):
+for f in range(1, 11, 2):   # (Start, stop, step)
     print(f)
 
 # Print numbers from 1 to 4
@@ -8,7 +7,7 @@ for f in range(1, 5):
 
 print("================")
 
-# Print numbers from 0 to 4
+# Print numbers using while loop
 count = 0
 while count < 5:
     print(count)
@@ -16,7 +15,7 @@ while count < 5:
 
 print("=================")
 
-# Print even numbers until 5 is reached
+# Use break and continue
 for i in range(1, 10):
     if i == 5:
         break
