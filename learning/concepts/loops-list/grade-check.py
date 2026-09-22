@@ -1,12 +1,12 @@
-n=int(input("enter your marks: "))
+# Get marks from the user
+n = int(input("Enter your marks: "))
 
-if n>=80:
+# Check the marks and print the result
+if n >= 80:
     print("Excellent")
-elif n>=60:
+elif n >= 60:
     print("Good")
-elif n>=40:
-    print("pass")
+elif n >= 40:
+    print("Pass")
 else:
-    print("fail")
-
-
+    print("Fail")
