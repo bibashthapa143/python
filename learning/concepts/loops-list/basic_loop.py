@@ -22,3 +22,4 @@ for i in range(1, 10):
     elif i % 2 == 0:
         print(i)
         continue
+
