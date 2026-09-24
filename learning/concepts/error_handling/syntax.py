@@ -17,3 +17,4 @@ else:
     print(f"Got a valid port: {port}")  # runs only if NO error happened
 finally:
     print("Done checking.")  # always runs, error or not
+
