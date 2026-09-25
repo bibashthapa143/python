@@ -1,53 +1,53 @@
-port_services = {                                                # known port -> service name mapping
-    20: "FTP-DATA",
-    21: "FTP",
-    22: "SSH",
-    23: "Telnet",
-    25: "SMTP",
-    53: "DNS",
-    67: "DHCP",
-    68: "DHCP-Client",
-    69: "TFTP",
-    80: "HTTP",
-    88: "Kerberos",
-    110: "POP3",
-    111: "RPCbind",
-    119: "NNTP",
-    123: "NTP",
-    135: "MS-RPC",
-    137: "NetBIOS-NS",
-    138: "NetBIOS-DGM",
-    139: "NetBIOS-SSN",
-    143: "IMAP",
-    161: "SNMP",
-    162: "SNMP-Trap",
-    179: "BGP",
-    194: "IRC",
-    389: "LDAP",
-    443: "HTTPS",
-    445: "SMB",
-    465: "SMTPS",
-    514: "Syslog",
-    515: "LPD",
-    587: "SMTP-Submission",
-    636: "LDAPS",
-    993: "IMAPS",
-    995: "POP3S",
-    1080: "SOCKS",
-    1433: "MSSQL",
-    1521: "Oracle-DB",
-    1723: "PPTP",
-    2049: "NFS",
-    3306: "MySQL",
-    3389: "RDP",
-    5060: "SIP",
-    5432: "PostgreSQL",
-    5500: "HTTP-ALT",
-    5900: "VNC",
-    6379: "Redis",
-    6667: "IRC",
-    8080: "HTTP-Proxy",
-    8443: "HTTPS-Alt",
-    9200: "Elasticsearch",
-    27017: "MongoDB",
+port_services = {                                                # Known port -> service name mapping
+    20: "FTP-DATA",            # FTP data transfer
+    21: "FTP",                 # File Transfer Protocol
+    22: "SSH",                 # Secure Shell remote access
+    23: "Telnet",              # Unencrypted remote terminal access
+    25: "SMTP",                # Simple Mail Transfer Protocol
+    53: "DNS",                 # Domain Name System
+    67: "DHCP",                # DHCP server
+    68: "DHCP-Client",         # DHCP client
+    69: "TFTP",                # Trivial File Transfer Protocol
+    80: "HTTP",                # Unencrypted web traffic
+    88: "Kerberos",            # Kerberos authentication
+    110: "POP3",               # Email retrieval
+    111: "RPCbind",             # Maps RPC services to ports
+    119: "NNTP",               # Network News Transfer Protocol
+    123: "NTP",                # Network Time Protocol
+    135: "MS-RPC",             # Microsoft RPC
+    137: "NetBIOS-NS",         # NetBIOS Name Service
+    138: "NetBIOS-DGM",        # NetBIOS Datagram Service
+    139: "NetBIOS-SSN",        # NetBIOS Session Service
+    143: "IMAP",               # Internet Message Access Protocol
+    161: "SNMP",               # Simple Network Management Protocol
+    162: "SNMP-Trap",          # SNMP trap/notification messages
+    179: "BGP",                # Border Gateway Protocol
+    194: "IRC",                # Internet Relay Chat
+    389: "LDAP",               # Lightweight Directory Access Protocol
+    443: "HTTPS",              # Encrypted web traffic over TLS
+    445: "SMB",                # Server Message Block
+    465: "SMTPS",              # SMTP over implicit TLS
+    514: "Syslog",             # Network/system logging
+    515: "LPD",                # Line Printer Daemon
+    587: "SMTP-Submission",    # Email message submission
+    636: "LDAPS",              # LDAP over TLS
+    993: "IMAPS",              # IMAP over TLS
+    995: "POP3S",              # POP3 over TLS
+    1080: "SOCKS",             # SOCKS proxy
+    1433: "MSSQL",              # Microsoft SQL Server
+    1521: "Oracle-DB",          # Oracle Database
+    1723: "PPTP",               # Point-to-Point Tunneling Protocol
+    2049: "NFS",                # Network File System
+    3306: "MySQL",              # MySQL database
+    3389: "RDP",                # Remote Desktop Protocol
+    5060: "SIP",                # Session Initiation Protocol
+    5432: "PostgreSQL",         # PostgreSQL database
+    5500: "HTTP-ALT",           # Alternate HTTP/service port
+    5900: "VNC",                # Virtual Network Computing
+    6379: "Redis",              # Redis database/cache
+    6667: "IRC",                # Internet Relay Chat
+    8080: "HTTP-Proxy",         # Common alternate HTTP/proxy port
+    8443: "HTTPS-Alt",          # Common alternate HTTPS port
+    9200: "Elasticsearch",      # Elasticsearch HTTP API
+    27017: "MongoDB",           # MongoDB database
 }
