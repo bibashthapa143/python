@@ -41,24 +41,19 @@ logger = setup_logging()
 # ============================================================================
 
 def scan_port(target, port):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)     # create a TCP connection tool (boilerplate)
-    sock.settimeout(1)                                            # give up after 1 second instead of hanging
-
     try:
-        result = sock.connect_ex((target, port))                  # try connecting; 0 = success (open)
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:   # auto-closes when block exits
+            sock.settimeout(1)                                            # give up after 1 second instead of hanging
+            result = sock.connect_ex((target, port))                      # try connecting; 0 = success (open)
     except socket.gaierror:
-        sock.close()                                              # close before exiting
         logger.error(f"Invalid or unreachable address: {target}")
         return "invalid_address"                                  # signal: stop scanning entirely
     except socket.timeout:
-        sock.close()
         return "closed"                                            # timeout = treat as closed, keep scanning
     except OSError as e:
-        sock.close()
         logger.warning(f"Socket error on port {port}: {e}")
         return "closed"                                            # treat any other socket error as closed/unreachable
 
-    sock.close()                                                  # always close the connection when done
     service = port_services.get(port, "Unknown service")          # look up the service name for this port
 
     if result == 0:
