@@ -1,3 +1,5 @@
+"""Live TCP port scanner — checks a host for open ports."""
+
 import socket                                                    # built-in module for network connections
 import argparse                                                  # for parsing command-line flags
 import logging                                                   # for logging scan activity to console + file
@@ -41,6 +43,7 @@ logger = setup_logging()
 # ============================================================================
 
 def scan_port(target, port):
+    """Attempt a TCP connection to target:port and return its status."""
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:   # auto-closes when block exits
             sock.settimeout(1)                                            # give up after 1 second instead of hanging
@@ -68,6 +71,7 @@ def scan_port(target, port):
 # ============================================================================
 
 def live_scan(target=None, port_range=None):
+    """Prompt for or accept a target/port range and run the scan."""
     if target is None:
         target = input("Enter target IP to scan: ").strip()       # ask user which address to scan
     else:
@@ -105,6 +109,7 @@ def live_scan(target=None, port_range=None):
     found_open = False                                             # track whether any open port was found
     status = None
 
+    # TODO: add multithreading for faster scans
     for port in range(start, end + 1):                      # check every port in the given range
         status = scan_port(target, port)
 
@@ -127,12 +132,14 @@ def live_scan(target=None, port_range=None):
 # ============================================================================
 
 def build_parser():
+    """Build and return the CLI argument parser."""
     parser = argparse.ArgumentParser(
         prog="port_scanner",
         description="Live TCP port scanner — checks a host for open ports."
     )
     parser.add_argument("--host", help="Target IP or hostname")
     parser.add_argument("--ports", help="Port range, e.g. 1-100")
+    parser.add_argument("--timeout", type=float, default=1.0, help="Socket timeout in seconds")
     return parser
 
 
