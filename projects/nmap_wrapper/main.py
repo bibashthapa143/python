@@ -49,6 +49,17 @@ def show_results(target, open_ports):
     print(f"\nTotal open ports: {len(open_ports)}")
 
 
+def save_results(target, open_ports, filename="scan_results.txt"):
+    """Write the open ports to a text file."""
+    with open(filename, "w") as f:
+        f.write(f"Open ports on {target}:\n")
+        for p in open_ports:
+            f.write(f"{p['port']:<12}{p['state']:<10}{p['service']}\n")
+        f.write(f"\nTotal open ports: {len(open_ports)}\n")
+
+    print(f"Results saved to {filename}")
+
+
 # ---- main program ----
 target = input("Enter target (e.g. scanme.nmap.org): ")
 ports = input("Enter port range (e.g. 1-1000) or press Enter for default: ")
@@ -56,3 +67,8 @@ ports = input("Enter port range (e.g. 1-1000) or press Enter for default: ")
 output = run_scan(target, ports)
 open_ports = parse_open_ports(output)
 show_results(target, open_ports)
+
+if open_ports:
+    choice = input("\nSave results to a file? (y/n): ").lower()
+    if choice == "y":
+        save_results(target, open_ports)
