@@ -1,15 +1,34 @@
-# nmap_wrapper
+<h1 align="center">🔍 nmap_wrapper</h1>
 
-A simple Python command-line tool that runs Nmap using `subprocess` and shows only the open ports.
+<p align="center">
+  A simple Python CLI that runs <b>Nmap</b> for you and shows <b>only the open ports</b>.
+</p>
 
-> ⚠️ Only scan machines you own or have permission to test. `scanme.nmap.org` is safe for practice.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white" alt="Python 3">
+  <img src="https://img.shields.io/badge/Requires-Nmap-informational" alt="Requires Nmap">
+  <img src="https://img.shields.io/badge/Interface-CLI-success" alt="CLI">
+  <img src="https://img.shields.io/badge/Status-Learning%20Project-orange" alt="Learning project">
+</p>
 
-## Requirements
+> ⚠️ **Only scan machines you own or have permission to test.**
+> `scanme.nmap.org` is safe for practice.
+
+---
+
+## ✨ Features
+
+- 🖥️ Simple command-line interface (`--target`, `--ports`)
+- 🎯 Shows open ports only, with state and service name
+- 🛡️ Clear error messages (Nmap missing, timeout, bad target)
+- 🐍 Pure Python standard library, no `pip install` needed
+
+---
+
+## 📦 Requirements
 
 - Python 3
 - Nmap installed and available in your PATH
-
-Install Nmap:
 
 ```bash
 # Kali / Ubuntu / Debian
@@ -27,18 +46,20 @@ Check it works:
 nmap --version
 ```
 
-## Usage
+---
+
+## 🚀 Usage
 
 ```bash
 python3 nmap_wrapper.py --target <ip-or-hostname> [--ports <range>]
 ```
 
-| Argument   | Required | Description                                         |
-|------------|----------|-----------------------------------------------------|
-| `--target` | Yes      | IP address or hostname to scan                      |
-| `--ports`  | No       | Ports to scan, e.g. `1-1000` or `22,80,443` (default: Nmap's default) |
+| Argument   | Required | Description                                                          |
+|------------|:--------:|----------------------------------------------------------------------|
+| `--target` | ✅       | IP address or hostname to scan                                       |
+| `--ports`  | ❌       | Ports to scan, e.g. `1-1000` or `22,80,443` (default: Nmap default) |
 
-Examples:
+**Examples**
 
 ```bash
 python3 nmap_wrapper.py --target scanme.nmap.org
@@ -47,7 +68,9 @@ python3 nmap_wrapper.py --target 192.168.56.101 --ports 22,80,443
 python3 nmap_wrapper.py --help
 ```
 
-## Example Output
+---
+
+## 📸 Example Output
 
 ```
 Open ports on scanme.nmap.org:
@@ -59,7 +82,13 @@ PORT        STATE     SERVICE
 Total open ports: 2
 ```
 
-## How It Works
+---
+
+## ⚙️ How It Works
+
+```
+--target / --ports  →  nmap (subprocess)  →  parse output  →  open ports table
+```
 
 1. Reads `--target` and `--ports` using `argparse`.
 2. Runs `nmap` with `subprocess.run()` (60 second timeout).
@@ -67,7 +96,9 @@ Total open ports: 2
 4. Reads the output line by line and keeps only lines containing `/tcp` and ` open `.
 5. Splits each line into port, state and service, and prints them as a table.
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 nmap_wrapper/
@@ -75,7 +106,9 @@ nmap_wrapper/
 └── README.md
 ```
 
-## Future Improvements
+---
+
+## 🗺️ Roadmap
 
 - [x] Let the user choose the port range
 - [x] Split each line into port, state, and service
