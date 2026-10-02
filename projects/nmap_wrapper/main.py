@@ -1,33 +1,34 @@
+import argparse
 import subprocess
 
 
 def run_scan(target, ports):
     """Run nmap and return its output text."""
     command = ["nmap"]
-    if ports:                                   # add -p only if user gave ports
+    if ports:                                   # add -p only if ports were given
         command += ["-p", ports]
     command.append(target)
 
     try:
         result = subprocess.run(command, capture_output=True, text=True, timeout=60)
 
-        if result.returncode != 0:                      # nmap itself failed
+        if result.returncode != 0:              # nmap itself failed
             print("Error:", result.stderr.strip())
-            exit()
+            exit(1)
 
         if "Failed to resolve" in result.stderr or "Failed to resolve" in result.stdout:
-            print("Could not resolve target:", target)  # nmap ran, but target is invalid
-        exit()
+            print("Could not resolve target:", target)   # nmap ran, target invalid
+            exit(1)
 
-        return result.stdout                            # everything is fine, give back the output
+        return result.stdout
 
     except FileNotFoundError:                   # nmap is not installed
         print("Nmap not installed!")
-        exit()
+        exit(1)
 
     except subprocess.TimeoutExpired:           # scan ran longer than 60s
         print("Scan took too long and was stopped.")
-        exit()
+        exit(1)
 
 
 def parse_open_ports(output):
@@ -62,35 +63,30 @@ def show_results(target, open_ports):
     print(f"\nTotal open ports: {len(open_ports)}")
 
 
-def save_results(target, open_ports, filename="scan_results.txt"):
-    """Write the open ports to a text file."""
-    with open(filename, "w") as f:                  # "w" overwrites old file
-        f.write(f"Open ports on {target}:\n")
-        for p in open_ports:
-            f.write(f"{p['port']:<12}{p['state']:<10}{p['service']}\n")
-        f.write(f"\nTotal open ports: {len(open_ports)}\n")
+def main():
+    # ---- define the command-line arguments ----
+    parser = argparse.ArgumentParser(description="Nmap wrapper - shows open ports only")
+    parser.add_argument("--target", required=True, help="IP or hostname to scan")
+    parser.add_argument("--ports", default="", help="Port range, e.g. 1-1000 (default: nmap default)")
+    args = parser.parse_args()
 
-    print(f"Results saved to {filename}")
+    target = args.target.strip()
+    ports = args.ports.strip()
+
+    # ---- validate input ----
+    if not target:
+        parser.error("target cannot be empty")
+    if target.startswith("-"):                  # stop nmap options sneaking in as target
+        parser.error("target cannot start with '-'")
+
+    # ---- scan -> parse -> show ----
+    output = run_scan(target, ports)
+    open_ports = parse_open_ports(output)
+    show_results(target, open_ports)
 
 
-# ---- main program ----
-try:
-    while True:                                     # ask until target is not empty
-        target = input("Enter target (e.g. scanme.nmap.org): ").strip()
-        if target:
-            break
-        print("Target cannot be empty!")
-
-    ports = input("Enter port range (e.g. 1-1000) or press Enter for default: ").strip()
-
-    output = run_scan(target, ports)                # 1. scan
-    open_ports = parse_open_ports(output)           # 2. pick out open ports
-    show_results(target, open_ports)                # 3. show them
-
-    if open_ports:                                  # 4. offer to save
-        choice = input("\nSave results to a file? (y/n): ").lower()
-        if choice == "y":
-            save_results(target, open_ports)
-
-except KeyboardInterrupt:                           # Ctrl+C
-    print("\nScan cancelled.")
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:                   # Ctrl+C
+        print("\nScan cancelled.")
