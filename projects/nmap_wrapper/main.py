@@ -8,27 +8,30 @@ def run_scan(target, ports):
         command += ["-p", ports]
     command.append(target)
 
-    result = subprocess.run(command, capture_output=True, text=True)
+    try:
+        result = subprocess.run(command, capture_output=True, text=True)
+        if result.returncode != 0:
+            print("Error:", result.stderr.strip())
+            exit()
+        return result.stdout
 
-    if result.returncode != 0:
-        print("Error:", result.stderr.strip())
-        exit()
-
-    return result.stdout
-
+    except FileNotFoundError:
+        print("Nmap not installed!!!!!!!!!")
 
 def parse_open_ports(output):
     """Turn nmap output into a list of open ports (as dictionaries)."""
     open_ports = []
-
-    for line in output.splitlines():
-        if "/tcp" in line and " open " in line:
-            parts = line.split()          # ['22/tcp', 'open', 'ssh']
-            open_ports.append({
-                "port": parts[0],
-                "state": parts[1],
-                "service": parts[2] if len(parts) > 2 else "unknown",
-            })
+    try:
+         for line in output.splitlines():
+                    if "/tcp" in line and " open " in line:
+                        parts = line.split()          # ['22/tcp', 'open', 'ssh']
+                        open_ports.append({
+                            "port": parts[0],
+                            "state": parts[1],
+                            "service": parts[2] if len(parts) > 2 else "unknown",
+                        })
+    except AttributeError:
+        return
 
     return open_ports
 
@@ -61,14 +64,23 @@ def save_results(target, open_ports, filename="scan_results.txt"):
 
 
 # ---- main program ----
-target = input("Enter target (e.g. scanme.nmap.org): ")
-ports = input("Enter port range (e.g. 1-1000) or press Enter for default: ")
+try:
+    while True:
+        target = input("Enter target (e.g. scanme.nmap.org): ").strip()
+        if target:
+            break
+        print("Target cannot be empty!")
 
-output = run_scan(target, ports)
-open_ports = parse_open_ports(output)
-show_results(target, open_ports)
+    ports = input("Enter port range (e.g. 1-1000) or press Enter for default: ").strip()
 
-if open_ports:
-    choice = input("\nSave results to a file? (y/n): ").lower()
-    if choice == "y":
-        save_results(target, open_ports)
+    output = run_scan(target, ports)
+    open_ports = parse_open_ports(output)
+    show_results(target, open_ports)
+
+    if open_ports:
+        choice = input("\nSave results to a file? (y/n): ").lower()
+        if choice == "y":
+            save_results(target, open_ports)
+
+except KeyboardInterrupt:
+    print("\nScan cancelled.")
