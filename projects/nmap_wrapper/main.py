@@ -4,23 +4,23 @@ import subprocess
 def run_scan(target, ports):
     """Run nmap and return its output text."""
     command = ["nmap"]
-    if ports:
+    if ports:                                   # add -p only if user gave ports
         command += ["-p", ports]
     command.append(target)
 
     try:
         result = subprocess.run(command, capture_output=True, text=True, timeout=60)
-        if result.returncode != 0:
+        if result.returncode != 0:              # nmap reported an error
             print("Error:", result.stderr.strip())
             exit()
         return result.stdout
 
-    except FileNotFoundError:
-        print("Nmap not installed!!!!!!!!!")
+    except FileNotFoundError:                   # nmap is not installed
+        print("Nmap not installed!")
         exit()
 
-    except subprocess.TimeoutExpired:
-        print("Scan took long and was stopped.")
+    except subprocess.TimeoutExpired:           # scan ran longer than 60s
+        print("Scan took too long and was stopped.")
         exit()
 
 
@@ -29,8 +29,8 @@ def parse_open_ports(output):
     open_ports = []
 
     for line in output.splitlines():
-        if "/tcp" in line and " open " in line:
-            parts = line.split()          # ['22/tcp', 'open', 'ssh']
+        if "/tcp" in line and " open " in line:     # keep only open port lines
+            parts = line.split()                    # ['22/tcp', 'open', 'ssh']
             open_ports.append({
                 "port": parts[0],
                 "state": parts[1],
@@ -58,7 +58,7 @@ def show_results(target, open_ports):
 
 def save_results(target, open_ports, filename="scan_results.txt"):
     """Write the open ports to a text file."""
-    with open(filename, "w") as f:
+    with open(filename, "w") as f:                  # "w" overwrites old file
         f.write(f"Open ports on {target}:\n")
         for p in open_ports:
             f.write(f"{p['port']:<12}{p['state']:<10}{p['service']}\n")
@@ -69,7 +69,7 @@ def save_results(target, open_ports, filename="scan_results.txt"):
 
 # ---- main program ----
 try:
-    while True:
+    while True:                                     # ask until target is not empty
         target = input("Enter target (e.g. scanme.nmap.org): ").strip()
         if target:
             break
@@ -77,14 +77,14 @@ try:
 
     ports = input("Enter port range (e.g. 1-1000) or press Enter for default: ").strip()
 
-    output = run_scan(target, ports)
-    open_ports = parse_open_ports(output)
-    show_results(target, open_ports)
+    output = run_scan(target, ports)                # 1. scan
+    open_ports = parse_open_ports(output)           # 2. pick out open ports
+    show_results(target, open_ports)                # 3. show them
 
-    if open_ports:
+    if open_ports:                                  # 4. offer to save
         choice = input("\nSave results to a file? (y/n): ").lower()
         if choice == "y":
             save_results(target, open_ports)
 
-except KeyboardInterrupt:
+except KeyboardInterrupt:                           # Ctrl+C
     print("\nScan cancelled.")
