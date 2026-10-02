@@ -9,7 +9,7 @@ def run_scan(target, ports):
     command.append(target)
 
     try:
-        result = subprocess.run(command, capture_output=True, text=True)
+        result = subprocess.run(command, capture_output=True, text=True, timeout=60)
         if result.returncode != 0:
             print("Error:", result.stderr.strip())
             exit()
@@ -17,21 +17,25 @@ def run_scan(target, ports):
 
     except FileNotFoundError:
         print("Nmap not installed!!!!!!!!!")
+        exit()
+
+    except subprocess.TimeoutExpired:
+        print("Scan took long and was stopped.")
+        exit()
+
 
 def parse_open_ports(output):
     """Turn nmap output into a list of open ports (as dictionaries)."""
     open_ports = []
-    try:
-         for line in output.splitlines():
-                    if "/tcp" in line and " open " in line:
-                        parts = line.split()          # ['22/tcp', 'open', 'ssh']
-                        open_ports.append({
-                            "port": parts[0],
-                            "state": parts[1],
-                            "service": parts[2] if len(parts) > 2 else "unknown",
-                        })
-    except AttributeError:
-        return
+
+    for line in output.splitlines():
+        if "/tcp" in line and " open " in line:
+            parts = line.split()          # ['22/tcp', 'open', 'ssh']
+            open_ports.append({
+                "port": parts[0],
+                "state": parts[1],
+                "service": parts[2] if len(parts) > 2 else "unknown",
+            })
 
     return open_ports
 
