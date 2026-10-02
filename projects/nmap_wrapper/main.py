@@ -10,10 +10,16 @@ def run_scan(target, ports):
 
     try:
         result = subprocess.run(command, capture_output=True, text=True, timeout=60)
-        if result.returncode != 0:              # nmap reported an error
+
+        if result.returncode != 0:                      # nmap itself failed
             print("Error:", result.stderr.strip())
             exit()
-        return result.stdout
+
+        if "Failed to resolve" in result.stderr or "Failed to resolve" in result.stdout:
+            print("Could not resolve target:", target)  # nmap ran, but target is invalid
+        exit()
+
+        return result.stdout                            # everything is fine, give back the output                       # everything is fine, give back the output
 
     except FileNotFoundError:                   # nmap is not installed
         print("Nmap not installed!")
