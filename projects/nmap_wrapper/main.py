@@ -19,7 +19,7 @@ def run_scan(target, ports):
             print("Could not resolve target:", target)  # nmap ran, but target is invalid
         exit()
 
-        return result.stdout                            # everything is fine, give back the output                       # everything is fine, give back the output
+        return result.stdout                            # everything is fine, give back the output
 
     except FileNotFoundError:                   # nmap is not installed
         print("Nmap not installed!")
