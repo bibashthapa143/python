@@ -78,11 +78,27 @@ def show_results(target, open_ports):
     print(f"\nTotal open ports: {len(open_ports)}")
 
 
+def save_results(target, open_ports, filename):
+    """Write the open ports to a text file."""
+    try:
+        with open(filename, "w") as f:              # "w" overwrites an old file
+            f.write(f"Open ports on {target}:\n")
+            for p in open_ports:
+                f.write(f"{p['port']:<12}{p['state']:<10}{p['service']}\n")
+            f.write(f"\nTotal open ports: {len(open_ports)}\n")
+
+        print(f"Results saved to {filename}")
+
+    except OSError:                                 # no permission, bad path, disk full
+        print("Could not save the file!")
+
+
 def main():
     # ---- define the command-line arguments ----
     parser = argparse.ArgumentParser(description="Nmap wrapper - shows open ports only")
     parser.add_argument("--target", required=True, help="IP or hostname to scan")
     parser.add_argument("--ports", default="", help="Port range, e.g. 1-1000 (default: nmap default)")
+    parser.add_argument("--save", metavar="FILE", help="Save results to a text file, e.g. results.txt")
     args = parser.parse_args()                  # read what the user typed
 
     target = args.target.strip()                # remove extra spaces
@@ -98,6 +114,9 @@ def main():
     output = run_scan(target, ports)            # 1. run nmap, get XML
     open_ports = parse_open_ports(output)       # 2. pick out open ports
     show_results(target, open_ports)            # 3. print the table
+
+    if args.save:                               # 4. only if --save was given
+        save_results(target, open_ports, args.save)
 
 
 if __name__ == "__main__":                      # run only when started directly
