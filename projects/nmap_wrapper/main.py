@@ -1,10 +1,11 @@
 import argparse
 import subprocess
+import xml.etree.ElementTree as ET
 
 
 def run_scan(target, ports):
-    """Run nmap and return its output text."""
-    command = ["nmap"]
+    """Run nmap and return its output as XML text."""
+    command = ["nmap", "-oX", "-"]              # -oX - = XML output to stdout
     if ports:                                   # add -p only if ports were given
         command += ["-p", ports]
     command.append(target)
@@ -31,18 +32,30 @@ def run_scan(target, ports):
         exit(1)
 
 
-def parse_open_ports(output):
-    """Turn nmap output into a list of open ports (as dictionaries)."""
+def parse_open_ports(xml_output):
+    """Read nmap's XML and return a list of open TCP ports (as dictionaries)."""
+    try:
+        root = ET.fromstring(xml_output)        # turn XML text into a tree
+    except ET.ParseError:                       # output was not valid XML
+        print("Could not read nmap output.")
+        exit(1)
+
     open_ports = []
 
-    for line in output.splitlines():
-        if "/tcp" in line and " open " in line:     # keep only open port lines
-            parts = line.split()                    # ['22/tcp', 'open', 'ssh']
-            open_ports.append({
-                "port": parts[0],
-                "state": parts[1],
-                "service": parts[2] if len(parts) > 2 else "unknown",
-            })
+    for port in root.iter("port"):              # go through every <port> tag
+        if port.get("protocol") != "tcp":       # TCP only for now
+            continue
+
+        state = port.find("state").get("state")
+        if state != "open":                     # skip closed/filtered ports
+            continue
+
+        service = port.find("service")          # <service> can be missing
+        open_ports.append({
+            "port": f"{port.get('portid')}/{port.get('protocol')}",   # e.g. 22/tcp
+            "state": state,
+            "service": service.get("name") if service is not None else "unknown",
+        })
 
     return open_ports
 
