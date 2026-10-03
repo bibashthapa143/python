@@ -18,8 +18,9 @@
 
 ## ✨ Features
 
-- 🖥️ Simple command-line interface (`--target`, `--ports`)
+- 🖥️ Simple command-line interface (`--target`, `--ports`, `--save`)
 - 🎯 Shows open ports only, with state and service name
+- 💾 Save results to a text file
 - 🛡️ Clear error messages (Nmap missing, timeout, bad target)
 - 🐍 Pure Python standard library, no `pip install` needed
 
@@ -51,13 +52,14 @@ nmap --version
 ## 🚀 Usage
 
 ```bash
-python3 nmap_wrapper.py --target <ip-or-hostname> [--ports <range>]
+python3 nmap_wrapper.py --target <ip-or-hostname> [--ports <range>] [--save <file>]
 ```
 
 | Argument   | Required | Description                                                          |
 |------------|:--------:|----------------------------------------------------------------------|
 | `--target` | ✅       | IP address or hostname to scan                                       |
 | `--ports`  | ❌       | Ports to scan, e.g. `1-1000` or `22,80,443` (default: Nmap default) |
+| `--save`   | ❌       | Save results to a text file, e.g. `results.txt`                      |
 
 **Examples**
 
@@ -65,6 +67,7 @@ python3 nmap_wrapper.py --target <ip-or-hostname> [--ports <range>]
 python3 nmap_wrapper.py --target scanme.nmap.org
 python3 nmap_wrapper.py --target scanme.nmap.org --ports 1-1000
 python3 nmap_wrapper.py --target 192.168.56.101 --ports 22,80,443
+python3 nmap_wrapper.py --target scanme.nmap.org --ports 1-1000 --save results.txt
 python3 nmap_wrapper.py --help
 ```
 
@@ -87,14 +90,15 @@ Total open ports: 2
 ## ⚙️ How It Works
 
 ```
---target / --ports  →  nmap (subprocess)  →  parse output  →  open ports table
+--target / --ports  →  nmap (subprocess)  →  parse XML  →  open ports table  →  (save)
 ```
 
-1. Reads `--target` and `--ports` using `argparse`.
-2. Runs `nmap` with `subprocess.run()` (60 second timeout).
+1. Reads `--target`, `--ports` and `--save` using `argparse`.
+2. Runs `nmap` with `subprocess.run()` and XML output (`-oX -`), with a 60 second timeout.
 3. Stops with a clear message if Nmap is missing, times out, fails, or the target can't be resolved.
-4. Reads the output line by line and keeps only lines containing `/tcp` and ` open `.
-5. Splits each line into port, state and service, and prints them as a table.
+4. Parses the XML with `xml.etree.ElementTree` and keeps only open TCP ports.
+5. Prints each port with its state and service as a table.
+6. If `--save` is given, writes the same table to a file.
 
 ---
 
@@ -113,5 +117,6 @@ nmap_wrapper/
 - [x] Let the user choose the port range
 - [x] Split each line into port, state, and service
 - [x] Add an `argparse` command-line interface
+- [x] Parse Nmap XML output
+- [x] Save results to a file
 - [ ] Add UDP port support
-- [ ] Save results to a file
