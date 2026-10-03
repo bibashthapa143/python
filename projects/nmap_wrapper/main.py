@@ -2,12 +2,13 @@ import argparse
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
+from typing import NoReturn
 
 TIMEOUT = 60  # max seconds for one scan
 
 
-def fail(message):
-    """Print an error message and stop the program."""
+def fail(message) -> NoReturn:
+    """Print an error message and stop the program (never returns)."""
     print(message)
     sys.exit(1)
 
