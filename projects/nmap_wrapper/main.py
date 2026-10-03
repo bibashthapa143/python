@@ -46,14 +46,14 @@ def parse_open_ports(xml_output):
         if port.get("protocol") != "tcp":       # TCP only for now
             continue
 
-        state = port.find("state").get("state")
-        if state != "open":                     # skip closed/filtered ports
-            continue
+        state_tag = port.find("state")          # may be None if the tag is missing
+        if state_tag is None or state_tag.get("state") != "open":
+            continue                            # skip closed/filtered ports
 
         service = port.find("service")          # <service> can be missing
         open_ports.append({
             "port": f"{port.get('portid')}/{port.get('protocol')}",   # e.g. 22/tcp
-            "state": state,
+            "state": "open",
             "service": service.get("name") if service is not None else "unknown",
         })
 
