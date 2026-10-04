@@ -1,6 +1,7 @@
-import argparse
+import argparse  # Import Python's argparse module
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser()  # Create a parser to handle command-line arguments
+
 
 parser.add_argument("--something", required=True)
 parser.add_argument("--nothing")
