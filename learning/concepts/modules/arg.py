@@ -1,14 +1,19 @@
-import argparse 
+import argparse
 
-parser = argparse.ArgumentParser(description="Show name and address")
+parser = argparse.ArgumentParser()
 
-parser.add_argument("name", help="Your name")
-parser.add_argument("-a","--address",default="Not given", help="Your address")
+parser.add_argument("--something", required=True)
+parser.add_argument("--nothing")
+parser.add_argument("--number", type=int, default=10)
+parser.add_argument("--verbose", action="store_true")
+
+
 
 args = parser.parse_args()
 
-print(f"Name: {args.name}")
-print(f"Address: {args.address}")
-
-
+print(f"Something: {args.something}")
+print(f"Nothing: {args.nothing}")
+print(f"Age: {args.number}")
+if args.verbose:
+    print(f"args.verbose= {args.verbose}")
 
