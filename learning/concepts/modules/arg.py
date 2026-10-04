@@ -3,11 +3,33 @@ import argparse  # Import Python's argparse module
 parser = argparse.ArgumentParser()  # Create a parser to handle command-line arguments
 
 
-parser.add_argument("--something", required=True)
-parser.add_argument("--nothing")
-parser.add_argument("--number", type=int, default=10, help="The number to use",nargs="+")
-parser.add_argument("--verbose", action="store_true")
-parser.add_argument("--color", choices=["red", "blue", "green"])
+parser.add_argument(
+    "--something",
+    required=True
+)  # Required optional-style argument; the user must provide --something
+
+parser.add_argument(
+    "--nothing"
+)  # Optional argument; the user can provide --nothing or leave it out
+
+parser.add_argument(
+    "--number",
+    type=int,
+    default=10,
+    help="The number to use",
+    nargs="+"
+)  # Accepts one or more integers; uses 10 if --number is not provided
+
+parser.add_argument(
+    "--verbose",
+    action="store_true"
+)  # Boolean flag; True if --verbose is provided, otherwise False
+
+parser.add_argument(
+    "--color",
+    choices=["red", "blue", "green"]
+)  # Only allows red, blue, or green as the value
+
 
 
 
