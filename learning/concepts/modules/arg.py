@@ -4,9 +4,10 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--something", required=True)
 parser.add_argument("--nothing")
-parser.add_argument("--number", type=int, default=10, help="The number to use")
+parser.add_argument("--number", type=int, default=10, help="The number to use",nargs="+")
 parser.add_argument("--verbose", action="store_true")
 parser.add_argument("--color", choices=["red", "blue", "green"])
+
 
 
 
