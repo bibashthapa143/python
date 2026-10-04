@@ -34,13 +34,17 @@ parser.add_argument(
 
 
 
-args = parser.parse_args()
+args = parser.parse_args()  # Read the command-line arguments and store them in args
 
-print(f"Something: {args.something}")
-print(f"Nothing: {args.nothing}")
-print(f"Age: {args.number}")
-if args.verbose:
-    print(f"args.verbose= {args.verbose}")
-print(f"Color: {args.color}")
+print(f"Something: {args.something}")  # Print the value provided for --something
+
+print(f"Nothing: {args.nothing}")  # Print the value of --nothing (None if not provided)
+
+print(f"Age: {args.number}")  # Print the number(s) provided for --number
+
+if args.verbose:  # Check if --verbose was included in the command
+    print(f"args.verbose= {args.verbose}")  # Print True when --verbose is present
+
+print(f"Color: {args.color}")  # Print the selected color (None if not provided)
 
 
