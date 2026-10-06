@@ -1,6 +1,6 @@
 # nmap_wrapper
 
-> A simple Python CLI that runs Nmap for you and shows only the open ports.
+> A simple Python CLI that runs Nmap and shows only the open ports.
 
 Status: 🚧 Learning project (in progress)
 
