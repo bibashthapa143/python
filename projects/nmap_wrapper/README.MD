@@ -28,7 +28,7 @@
 
 ## 📸 Demo
 
-![nmap_wrapper demo](images\demo.png)
+![nmap_wrapper demo](images/demo.png)
 
 Example output:
 
