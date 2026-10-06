@@ -1,15 +1,12 @@
-<h1 align="center">🔍 nmap_wrapper</h1>
+# nmap_wrapper
 
-<p align="center">
-  A simple Python CLI that runs <b>Nmap</b> for you and shows <b>only the open ports</b>.
-</p>
+> A simple Python CLI that runs Nmap for you and shows only the open ports.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white" alt="Python 3">
-  <img src="https://img.shields.io/badge/Requires-Nmap-informational" alt="Requires Nmap">
-  <img src="https://img.shields.io/badge/Interface-CLI-success" alt="CLI">
-  <img src="https://img.shields.io/badge/Status-Learning%20Project-orange" alt="Learning project">
-</p>
+Status: 🚧 Learning project (in progress)
+
+![Python 3](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
+![Requires Nmap](https://img.shields.io/badge/Requires-Nmap-informational)
+![CLI](https://img.shields.io/badge/Interface-CLI-success)
 
 > ⚠️ **Only scan machines you own or have permission to test.**
 > `scanme.nmap.org` is safe for practice.
@@ -73,11 +70,15 @@ nmap --version
 python3 nmap_wrapper.py --target <ip-or-hostname> [--ports <range>] [--save <file>]
 ```
 
-| Argument   | Required | Description                                                          |
-|------------|:--------:|----------------------------------------------------------------------|
-| `--target` | ✅       | IP address or hostname to scan                                       |
-| `--ports`  | ❌       | Ports to scan, e.g. `1-1000` or `22,80,443` (default: Nmap default) |
-| `--save`   | ❌       | Save results to a text file, e.g. `results.txt`                      |
+On Windows, use `python` or `py` instead of `python3`.
+
+| Argument   | Required | Description                                                                 |
+|------------|:--------:|-----------------------------------------------------------------------------|
+| `--target` | ✅       | IP address or hostname to scan                                              |
+| `--ports`  | ❌       | Ports to scan, e.g. `1-1000` or `22,80,443` (default: Nmap's top 1000 TCP ports) |
+| `--save`   | ❌       | Save results to a text file, e.g. `results.txt`                             |
+
+> Scans time out after 60 seconds, so very wide ranges such as `1-65535` may not finish.
 
 **Examples**
 
@@ -104,6 +105,8 @@ python3 nmap_wrapper.py --help
 5. Prints each port with its state and service as a table.
 6. If `--save` is given, writes the same table to a file.
 
+**Security note:** Nmap is called with an argument list (no `shell=True`), so the value of `--target` is never interpreted by a shell.
+
 ---
 
 ## 📁 Project Structure
@@ -125,4 +128,5 @@ nmap_wrapper/
 - [x] Add an `argparse` command-line interface
 - [x] Parse Nmap XML output
 - [x] Save results to a file
-- [ ] Add UDP port support
+- [ ] Add UDP port support (UDP scans are slower and usually need root/administrator privileges)
+- [ ] Add a `--timeout` option
