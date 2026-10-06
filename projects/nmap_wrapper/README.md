@@ -61,8 +61,8 @@ Total open ports: 2
 ## ⚡ Quick Start
 
 ```bash
-git clone https://github.com/<your-username>/nmap_wrapper.git
-cd nmap_wrapper
+git clone https://github.com/bibashthapa143/python.git
+cd python/projects/nmap_wrapper
 python3 nmap_wrapper.py --target scanme.nmap.org
 ```
 
