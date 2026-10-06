@@ -173,7 +173,7 @@ nmap_wrapper/
 - [x] Parse Nmap XML output
 - [x] Save results to a file
 - [ ] Add UDP port support (slower, and usually needs root/administrator privileges)
-- [ ] Add a `--timeout` option
+
 
 ---
 
