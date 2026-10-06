@@ -28,7 +28,7 @@
 
 ## 📸 Demo
 
-![nmap_wrapper demo](projects\nmap_wrapper\images)
+![nmap_wrapper demo](images\Screenshot 2026-10-06 222459.png)
 
 Example output:
 
