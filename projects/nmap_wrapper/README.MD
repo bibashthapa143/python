@@ -26,6 +26,24 @@
 
 ---
 
+## 📸 Demo
+
+![nmap_wrapper demo](D:\python\projects\nmap_wrapper\Screenshot 2026-10-06 222459.png)
+
+Example output:
+
+```
+Open ports on scanme.nmap.org:
+PORT        STATE     SERVICE
+--------------------------------
+22/tcp      open      ssh
+80/tcp      open      http
+
+Total open ports: 2
+```
+
+---
+
 ## 📦 Requirements
 
 - Python 3
@@ -73,20 +91,6 @@ python3 nmap_wrapper.py --help
 
 ---
 
-## 📸 Example Output
-
-```
-Open ports on scanme.nmap.org:
-PORT        STATE     SERVICE
---------------------------------
-22/tcp      open      ssh
-80/tcp      open      http
-
-Total open ports: 2
-```
-
----
-
 ## ⚙️ How It Works
 
 ```
@@ -106,6 +110,8 @@ Total open ports: 2
 
 ```
 nmap_wrapper/
+├── images/
+│   └── demo.png
 ├── nmap_wrapper.py
 └── README.md
 ```
