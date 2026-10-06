@@ -28,7 +28,7 @@
 
 ## 📸 Demo
 
-![nmap_wrapper demo](D:\python\projects\nmap_wrapper\Screenshot 2026-10-06 222459.png)
+![nmap_wrapper demo](projects\nmap_wrapper\images)
 
 Example output:
 
