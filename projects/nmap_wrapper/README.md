@@ -177,10 +177,6 @@ nmap_wrapper/
 
 ---
 
-## 📄 License
-
-Released under the MIT License. Add a `LICENSE` file to the repo to match.
-
 <p align="center">
   Made with 🐍 while learning network security<br>
   ⭐ Star the repo if you found it useful!
