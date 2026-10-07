@@ -15,7 +15,7 @@
 <!-- AUTO-GENERATED-CONTENT:START -->
 | Project | Description | Status |
 |---|---|---|
-| [nmap_wrapper](nmap_wrapper) | A simple Python CLI that runs Nmap and shows only the open ports. | 🚧 Learning project (in progress) |
+| [nmap_wrapper](nmap_wrapper) | A simple Python CLI that runs Nmap for you and shows only the open ports. | ✅ Complete (v1) |
 | [🔍 Port Lookup](port_lookup) | A Python CLI tool that looks up port-to-service mappings and performs live TCP port scans — offline reference lookup and real network scanning in one tool. | 🚧 In Progress |
 | [🔐 Wi-Fi Password Extractor](wifi-password-extractor) | This tool only reveals passwords for Wi-Fi networks **already saved on the machine it's run on** — it cannot retrieve passwords for networks you haven't connected to, and it does not attack, crack, or bypass any network security. | 🚧 In Progress |
 <!-- AUTO-GENERATED-CONTENT:END -->
