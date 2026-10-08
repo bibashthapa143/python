@@ -1,3 +1,4 @@
+import json
 import sys
 import requests
 
@@ -42,4 +43,15 @@ for header in sorted(SECURITY_HEADERS):
 print()
 print(f"{len(present)}/{len(SECURITY_HEADERS)} security headers present")
 
+
+result = {
+    "url":url,
+    "status_code": response.status_code,
+    "present": sorted(present),
+    "missing": sorted(missing),
+}
+with open("result.json", "w") as f:
+    json.dump(result, f, indent=2)
+
+print("Saved to result.json")
 

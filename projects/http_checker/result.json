@@ -1,0 +1,14 @@
+{
+  "url": "https://github.com",
+  "status_code": 200,
+  "present": [
+    "content-security-policy",
+    "referrer-policy",
+    "strict-transport-security",
+    "x-content-type-options",
+    "x-frame-options"
+  ],
+  "missing": [
+    "permissions-policy"
+  ]
+}
