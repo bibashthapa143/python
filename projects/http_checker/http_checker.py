@@ -20,7 +20,7 @@ SECURITY_HEADERS = {
     "x-frame-options",
     "x-content-type-options",
     "referrer-policy",
-    "permission-policy",
+    "permissions-policy",
 }
 
 received = {name.lower() for name in response.headers}
@@ -28,6 +28,18 @@ received = {name.lower() for name in response.headers}
 present = SECURITY_HEADERS & received
 missing = SECURITY_HEADERS - received
 
-print(f"present: {sorted(present)}")
-print(f"Missing: {sorted(missing)}")
+print()
+print(f"{'HEADER':<30} RESULT")
+print("-" * 40)
+
+for header in sorted(SECURITY_HEADERS):
+    if header in present:
+        result = "PRESENT"
+    else:
+        result = "MISSING"
+    print(f"{header:<30} {result}")
+
+print()
+print(f"{len(present)}/{len(SECURITY_HEADERS)} security headers present")
+
 
