@@ -7,3 +7,5 @@ tempCodeRunner*
 *.txt
 *.log
 *.json
+!requirement.txt
+
