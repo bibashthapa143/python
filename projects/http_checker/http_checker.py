@@ -7,6 +7,11 @@ if len(sys.argv) != 2:
 
 url = sys.argv[1]
 
-response = requests.get(url, timeout=10)
+try:
+    response = requests.get(url, timeout=10)
+except requests.exceptions.RequestException as error:
+    print(f"Request failed: {error}")
+    sys.exit(1)
 print(f"Status code: {response.status_code}")
+
 
