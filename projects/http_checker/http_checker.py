@@ -26,6 +26,7 @@ print(f"Status code: {response.status_code}")
 
 # --- Step 3: Compare headers using sets ---
 # The security headers we want to see (lowercase, so comparing is easy)
+# These headers help protect websites against common web attacks.
 SECURITY_HEADERS = {
     "strict-transport-security",
     "content-security-policy",
