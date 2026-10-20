@@ -1,22 +1,17 @@
-services = {
-    22: "ssh",
-    80: "http",
-    443: "https"
-}
+# classify_ports.py
 
-def classify(test_ports):
+services = {22: "ssh", 80: "http", 443: "https"}  # port: service name
+
+def classify(ports):
     result = {}
-    for port in test_ports:
+    for port in ports:                 # check each port
         if port in services:
             result[port] = services[port]
         else:
             result[port] = "unknown"
-    return result
+    return result                      # after the loop
 
-
-if __name__ == "__main__":
-    test_ports = [22, 24, 30, 40, 80, 443, 999]
-    classified = classify(test_ports)
-
-    for port, service in classified.items():
+if __name__ == "__main__":             # run only when file is run directly
+    classified = classify([22, 24, 80, 443, 999])
+    for port, service in classified.items():   # port and service together
         print(f"{port} -> {service}")
