@@ -9,6 +9,19 @@ def classify(ports):
     return result                      # after the loop
 
 if __name__ == "__main__":             # run only when file is run directly
-    classified = classify([22, 24, 80, 443, 999])
-    for port, service in classified.items():   # port and service together
+   while True:
+    user_input = input("Enter ports: ")
+
+    try:
+       ports = [int(p) for p in user_input.split(",")]
+    except ValueError:
+       print("Invalid input")
+       continue
+
+
+    
+    
+
+   
+    for port, service in classify(ports).items():   # port and service together
         print(f"{port} -> {service}")
