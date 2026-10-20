@@ -4,38 +4,40 @@ services = {22: "ssh", 80: "http", 443: "https"}  # port: service name
 
 def classify(ports):
     result = {}
-    for port in ports:                                # check each port
-        result[port] = services.get(port, "UNKNOWN")  # UNKNOWN if not found
+    for port in ports:
+        result[port] = services.get(port, "UNKNOWN")
     return result
 
 if __name__ == "__main__":
-    while True:
-        user_input = input("Enter ports (or q to quit): ")
+    all_ports = set()                                 # set: no duplicates
 
-        if user_input.lower() == "q":                 # exit condition
+    while True:
+        user_input = input("Enter ports (done to finish): ")
+
+        if user_input.lower() == "done":              # stop collecting
             break
 
         try:
             ports = [int(p) for p in user_input.split(",")]
-        except ValueError:                            # letters, empty input
+        except ValueError:
             print("Invalid input")
             continue
 
-        if any(p < 1 or p > 65535 for p in ports):    # range check
+        if any(p < 1 or p > 65535 for p in ports):
             print("Port out of range (1-65535)")
             continue
 
-        results = classify(ports)
-        known = 0                                     # reset on every input
-        unknown = 0
+        all_ports.update(ports)                       # add to collection, no output yet
 
-        for port in sorted(results):                  # ports in order
-            service = results[port]
-            print(f"{port} -> {service}")
+    results = classify(all_ports)                     # classify everything once
+    known = 0
+    unknown = 0
 
-            if service == "UNKNOWN":                  # count each type
-                unknown += 1
-            else:
-                known += 1
+    for port in sorted(results):
+        print(f"{port} -> {results[port]}")
+        if results[port] == "UNKNOWN":
+            unknown += 1
+        else:
+            known += 1
 
-        print(f"Known: {known}, Unknown: {unknown}")
+    print(f"Total: {len(results)}, Known: {known}, Unknown: {unknown}")
