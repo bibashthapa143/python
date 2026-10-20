@@ -6,9 +6,9 @@ def classify(ports):
     result = {}
     for port in ports:                                # check each port
         result[port] = services.get(port, "UNKNOWN")  # UNKNOWN if not found
-    return result                                     # after the loop
+    return result
 
-if __name__ == "__main__":                            # run only when file is run directly
+if __name__ == "__main__":
     while True:
         user_input = input("Enter ports (or q to quit): ")
 
@@ -17,14 +17,25 @@ if __name__ == "__main__":                            # run only when file is ru
 
         try:
             ports = [int(p) for p in user_input.split(",")]
-        except ValueError:                            # letters, empty input, etc.
+        except ValueError:                            # letters, empty input
             print("Invalid input")
             continue
 
-        # range check: any() is True if at least one port is bad
-        if any(p < 1 or p > 65535 for p in ports):
+        if any(p < 1 or p > 65535 for p in ports):    # range check
             print("Port out of range (1-65535)")
             continue
 
-        for port, service in classify(ports).items():
+        results = classify(ports)
+        known = 0                                     # reset on every input
+        unknown = 0
+
+        for port in sorted(results):                  # ports in order
+            service = results[port]
             print(f"{port} -> {service}")
+
+            if service == "UNKNOWN":                  # count each type
+                unknown += 1
+            else:
+                known += 1
+
+        print(f"Known: {known}, Unknown: {unknown}")
